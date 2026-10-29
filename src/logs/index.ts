@@ -28,12 +28,30 @@ export interface LocalLogEntry {
 
 type LogListener = (logs: readonly LocalLogEntry[]) => void;
 
+export const DEFAULT_LOG_AUTO_DISMISS_MS = 5000;
+
 const MAX_SESSION_LOGS = 50;
 const sessionLogs: LocalLogEntry[] = [];
 const listeners = new Set<LogListener>();
+const autoDismissTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
 function createLogId(): string {
   return `log_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function clearLogTimer(logId: string): void {
+  const timer = autoDismissTimers.get(logId);
+  if (timer !== undefined) {
+    clearTimeout(timer);
+    autoDismissTimers.delete(logId);
+  }
+}
+
+function clearAllLogTimers(): void {
+  autoDismissTimers.forEach((timer) => {
+    clearTimeout(timer);
+  });
+  autoDismissTimers.clear();
 }
 
 function notifyListeners(): void {
@@ -86,6 +104,7 @@ function sanitizeLogUserMessage(rawMessage: string): string {
 /**
  * Registra um erro ou aviso local na memória da sessão e envia detalhes técnicos ao console.
  * Nunca expõe pilhas de execução cruas (stack traces) no texto de `userMessage`.
+ * Possui fechamento automático (auto close) após alguns segundos por padrão (`autoDismissMs`).
  */
 export function recordLocalLog(params: {
   level?: LocalLogLevel;
@@ -93,6 +112,7 @@ export function recordLocalLog(params: {
   userMessage: string;
   context?: string;
   technicalDetails?: unknown;
+  autoDismissMs?: number;
 }): LocalLogEntry {
   const entry: LocalLogEntry = {
     id: createLogId(),
@@ -105,7 +125,18 @@ export function recordLocalLog(params: {
 
   sessionLogs.unshift(entry);
   if (sessionLogs.length > MAX_SESSION_LOGS) {
-    sessionLogs.pop();
+    const removed = sessionLogs.pop();
+    if (removed) {
+      clearLogTimer(removed.id);
+    }
+  }
+
+  const autoDismissMs = params.autoDismissMs ?? DEFAULT_LOG_AUTO_DISMISS_MS;
+  if (autoDismissMs > 0) {
+    const timer = setTimeout(() => {
+      dismissLocalLog(entry.id);
+    }, autoDismissMs);
+    autoDismissTimers.set(entry.id, timer);
   }
 
   const formattedConsolePrefix = `[GGST Combo Maker][${entry.level.toUpperCase()}][${entry.code}]`;
@@ -170,9 +201,11 @@ export function getLatestLog(): LocalLogEntry | null {
 }
 
 /**
- * Remove um alerta específico da memória da sessão após o usuário dispensá-lo na interface.
+ * Remove um alerta específico da memória da sessão após o usuário dispensá-lo na interface
+ * ou quando o temporizador de auto close expira.
  */
 export function dismissLocalLog(logId: string): void {
+  clearLogTimer(logId);
   const index = sessionLogs.findIndex((item) => item.id === logId);
   if (index !== -1) {
     sessionLogs.splice(index, 1);
@@ -184,6 +217,7 @@ export function dismissLocalLog(logId: string): void {
  * Limpa todos os alertas temporários da memória da sessão.
  */
 export function clearSessionLogs(): void {
+  clearAllLogTimers();
   if (sessionLogs.length > 0) {
     sessionLogs.length = 0;
     notifyListeners();

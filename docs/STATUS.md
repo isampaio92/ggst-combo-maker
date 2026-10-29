@@ -3,7 +3,7 @@
 - **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6) foram integralmente construídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 6 operacionais).
 - **Fase atual:** Fase 6 concluída (100% das fases do plano de construção concluídas).
 - **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e, caso desejado, realizar a validação final de segurança ou publicação estática do pacote `dist/` no GitHub Pages.
-- **Última atualização:** 2026-10-29 15:16 (BRT)
+- **Última atualização:** 2026-10-29 15:25 (BRT)
 
 ---
 
@@ -74,7 +74,7 @@
 - Teste automatizado de integração da Fase 5 (`verify_phase5.ts` via Vite SSR Loader): Aprovado (formatação textual Numpad estrita conforme FSD — `2K`, `236P`, `214K~P`, `CH c.S > f.S > 236K > RC > Dash > 623HS`, `6P + K > [4]6HS > 632146P` —, cópia para área de transferência via Clipboard API, alternância e persistência de preferência visual Setas/Numpad na chave `settings`, renderização protegida em `ComboReadOnlyView` sem paleta ativa e sobrescrita com atualização de `updated_at` ao editar).
 
 ### Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy (CONCLUÍDA)
-- [x] Integrar o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) na interface principal (`src/views/AlertBannerList.tsx` e `src/app/App.tsx`) consumindo a fila/memória de erros do módulo `src/logs/` e conectando falhas de validação dos Controllers (`useSidebarController.ts` e `useComboEditorController.ts`).
+- [x] Integrar o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) na interface principal (`src/views/AlertBannerList.tsx` e `src/app/App.tsx`) consumindo a fila/memória de erros do módulo `src/logs/` com fechamento automático (*auto close* após 5 segundos) e conectando falhas de validação dos Controllers (`useSidebarController.ts` e `useComboEditorController.ts`).
 - [x] Revisar e reforçar a sanitização rigorosa de todas as entradas e saídas textuais (`name` de pastas, `name` de combos, `character` e mensagens de log) contra ataques de Cross-Site Scripting (XSS) antes de persistir e renderizar no DOM (`sanitizeUserText`, `sanitizeCharacterSelection` e `sanitizeLogUserMessage`).
 - [x] Validar os critérios de aceitação técnica e funcional da seção 26 do `docs/FSD.md` e a fidelidade estética ao `docs/DESIGN.md`.
 - [x] Ajustar configurações finais (`build:gh-pages` em `package.json` e `base: './'` em `vite.config.ts`) e testar o pacote estático gerado em `dist/` para entrega no GitHub Pages.
