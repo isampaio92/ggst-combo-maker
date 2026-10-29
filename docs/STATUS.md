@@ -1,9 +1,21 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6) foram integralmente construídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 6 operacionais).
-- **Fase atual:** Fase 6 concluída (100% das fases do plano de construção concluídas).
-- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e, caso desejado, realizar a validação final de segurança ou publicação estática do pacote `dist/` no GitHub Pages.
-- **Última atualização:** 2026-10-29 15:25 (BRT)
+- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6) e a **Revisão Final de Segurança Pré-Publicação** foram integralmente concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte automatizada de auditoria de segurança aprovadas).
+- **Fase atual:** Revisão de Segurança e Boas Práticas concluída (100% pronto para publicação).
+- **Próximo passo recomendado:** Executar `git push` para enviar os commits ao GitHub e avançar para a etapa de publicação (Passo 6).
+- **Última atualização:** 2026-10-29 15:32 (BRT)
+
+---
+
+## Revisão de Segurança e Boas Práticas (CONCLUÍDA)
+
+- **Escopo auditado:** Código-fonte completo (`src/`), configurações (`vite.config.ts`, `tsconfig.json`, `package.json`, `index.html`, `.gitignore`), artefatos de build (`dist/`), documentação técnica (`docs/`) e regras do `docs/FSD.md`.
+- **Principais achados identificados e corrigidos:**
+  1. **[Médio] Ausência de Content Security Policy (CSP) e Referrer Policy em `index.html`:** Adicionadas meta tags `Content-Security-Policy` restritiva (`script-src 'self'; object-src 'none'`, etc.) e `referrer="no-referrer"` para defesa em profundidade contra XSS no GitHub Pages.
+  2. **[Baixo] Ausência de limites quantitativos em arrays do Local Storage e validação de formato de IDs no Drag-and-Drop:** Implementados `isValidEntityId` (`SAFE_ENTITY_ID_REGEX`) e limites máximos (`MAX_COMBO_SEQUENCE_LENGTH = 200`, `MAX_STORED_FOLDERS = 500`, `MAX_STORED_COMBOS = 2000`) em `src/models/types.ts`, `src/models/storage.ts`, `src/models/comboModel.ts`, `src/controllers/useComboEditorController.ts` e `src/controllers/useSidebarController.ts`.
+  3. **[Baixo] Exposição de objetos de erro brutos no `console.error`:** Implementada `sanitizeTechnicalDetailsForConsole` em `src/logs/index.ts` para omitir pilhas de execução cruas (stack traces) no console.
+  4. **[Baixo] Bloqueio explícito de cópia de pasta pública no build:** Adicionado `publicDir: false` em `vite.config.ts`, garantindo que apenas os assets compilados sejam emitidos em `dist/`.
+- **Pendências de segurança:** Nenhuma pendência de segurança aberta. Todos os achados foram corrigidos e testados.
 
 ---
 

@@ -10,9 +10,11 @@ import {
 import {
   type Combo,
   type ComboInputToken,
+  MAX_COMBO_SEQUENCE_LENGTH,
   generateUUID,
   isValidCharacterName,
   isValidComboInputToken,
+  isValidEntityId,
   sanitizeUserText,
 } from './types';
 
@@ -130,9 +132,9 @@ export const ComboModel = {
       return { status: 'error', message };
     }
 
-    const sanitizedSequence = params.sequence.filter((token) =>
-      isValidComboInputToken(token)
-    );
+    const sanitizedSequence = params.sequence
+      .filter((token) => isValidComboInputToken(token))
+      .slice(0, MAX_COMBO_SEQUENCE_LENGTH);
 
     if (sanitizedSequence.length === 0) {
       const message = 'Adicione pelo menos um botão à sequência antes de salvar o combo.';
@@ -141,6 +143,17 @@ export const ComboModel = {
         code: 'VALIDATION_ERROR',
         userMessage: message,
         context: 'ComboModel.save',
+      });
+      return { status: 'error', message };
+    }
+
+    if (params.id && !isValidEntityId(params.id)) {
+      const message = 'Identificador do combo em formato inválido.';
+      recordLocalLog({
+        level: 'error',
+        code: 'VALIDATION_ERROR',
+        userMessage: message,
+        context: 'ComboModel.save(id)',
       });
       return { status: 'error', message };
     }

@@ -3,6 +3,7 @@ import { recordLocalLog } from '../logs';
 import {
   type Combo,
   type Folder,
+  isValidEntityId,
   sanitizeUserText,
   sortCombosByUpdatedAtDesc,
   sortFoldersAlphabetically,
@@ -436,11 +437,13 @@ export function useSidebarController(params: UseSidebarControllerParams) {
 
   const handleFolderDrop = useCallback(
     (targetFolderId: string, explicitComboId?: string): Combo | null => {
-      const sourceComboId = explicitComboId || draggedComboId;
+      const safeExplicitId =
+        explicitComboId && isValidEntityId(explicitComboId) ? explicitComboId.trim() : null;
+      const sourceComboId = safeExplicitId || draggedComboId;
       setDraggedComboId(null);
       setDragOverFolderId(null);
 
-      if (!sourceComboId) {
+      if (!sourceComboId || !isValidEntityId(targetFolderId)) {
         return null;
       }
 

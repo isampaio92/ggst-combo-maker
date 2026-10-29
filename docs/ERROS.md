@@ -50,3 +50,16 @@ Este documento funciona como uma memória técnica viva do projeto **GGST Combo 
 - **Causa:** A resolução nativa de módulos ES do Node.js procura `node_modules/` subindo a árvore de diretórios a partir da localização física do arquivo do script (que estava em uma pasta de scratch fora do repositório), e não a partir do `process.cwd()`.
 - **Solução aplicada:** Utilizado `createRequire(path.join(process.cwd(), 'package.json'))` de `node:module` no script de verificação para resolver `react`, `react-dom/server` e `vite` diretamente a partir do `node_modules/` da raiz do projeto.
 - **Como evitar no futuro:** Em scripts auxiliares executados fora da árvore do projeto, sempre ancorar a resolução de dependências em `path.join(process.cwd(), 'package.json')` via `createRequire`.
+
+---
+
+## 2026-10-29 - Ausência de limites quantitativos em sequências/IDs do Local Storage e de cabeçalhos CSP em `index.html`
+
+- **Sintoma:** Durante a revisão de segurança pré-publicação, identificou-se que: (1) `index.html` não possuía política de segurança de conteúdo (`Content-Security-Policy`) nem política de `referrer`; (2) o schema do Local Storage e os handlers de Drag-and-Drop aceitavam IDs sem validação de formato (`SAFE_ENTITY_ID_REGEX`) e sequências de combo sem teto de tamanho máximo; (3) `recordLocalLog` passava o objeto bruto de erro ao `console.error`, podendo exibir caminhos locais ou stack traces no console; e (4) `vite.config.ts` não desativava explicitamente `publicDir`.
+- **Causa:** As validações iniciais focavam em sanitização textual (`sanitizeUserText`) e integridade referencial básica, sem impor tetos numéricos de proteção contra negação de serviço local (DoS no navegador) ou cabeçalhos declarativos de defesa em profundidade para hospedagem estática no GitHub Pages.
+- **Solução aplicada:**
+  1. Adicionadas as meta tags `Content-Security-Policy` e `referrer="no-referrer"` em `index.html`.
+  2. Criados os limites `MAX_ENTITY_ID_LENGTH` (64), `MAX_COMBO_SEQUENCE_LENGTH` (200), `MAX_STORED_FOLDERS` (500), `MAX_STORED_COMBOS` (2000) e o validador `isValidEntityId` em `src/models/types.ts`, integrados a `src/models/storage.ts`, `src/models/comboModel.ts`, `src/controllers/useComboEditorController.ts` e `src/controllers/useSidebarController.ts`.
+  3. Adicionada a função `sanitizeTechnicalDetailsForConsole` em `src/logs/index.ts` para higienizar detalhes técnicos antes do `console.error`/`console.warn`.
+  4. Definido `publicDir: false` em `vite.config.ts`.
+- **Como evitar no futuro:** Sempre incluir `Content-Security-Policy` no HTML de SPAs estáticas, validar formato de IDs e limites máximos de coleções lidas do Local Storage e sanitizar objetos de erro antes de enviá-los ao console.

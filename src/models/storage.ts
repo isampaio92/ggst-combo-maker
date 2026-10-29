@@ -4,11 +4,15 @@ import {
   type Combo,
   type ComboInputToken,
   type Folder,
+  MAX_COMBO_SEQUENCE_LENGTH,
+  MAX_STORED_COMBOS,
+  MAX_STORED_FOLDERS,
   type MigrationControlState,
   type MigrationEntry,
   type Settings,
   isValidCharacterName,
   isValidComboInputToken,
+  isValidEntityId,
   isValidVisualPreference,
   sanitizeUserText,
 } from './types';
@@ -95,6 +99,11 @@ export function validateAndNormalizeFolders(input: unknown): {
   let hadInvalidItems = false;
 
   for (const item of input) {
+    if (folders.length >= MAX_STORED_FOLDERS) {
+      hadInvalidItems = true;
+      break;
+    }
+
     if (!item || typeof item !== 'object') {
       hadInvalidItems = true;
       continue;
@@ -105,7 +114,7 @@ export function validateAndNormalizeFolders(input: unknown): {
     const rawName = typeof candidate.name === 'string' ? candidate.name : '';
     const sanitizedName = sanitizeUserText(rawName);
 
-    if (!rawId || !sanitizedName) {
+    if (!isValidEntityId(rawId) || !sanitizedName) {
       hadInvalidItems = true;
       continue;
     }
@@ -148,6 +157,11 @@ export function validateAndNormalizeCombos(
   let hadInvalidItems = false;
 
   for (const item of input) {
+    if (combos.length >= MAX_STORED_COMBOS) {
+      hadInvalidItems = true;
+      break;
+    }
+
     if (!item || typeof item !== 'object') {
       hadInvalidItems = true;
       continue;
@@ -163,9 +177,9 @@ export function validateAndNormalizeCombos(
     const rawUpdatedAt = candidate.updated_at;
 
     if (
-      !rawId ||
+      !isValidEntityId(rawId) ||
       seenIds.has(rawId) ||
-      !rawFolderId ||
+      !isValidEntityId(rawFolderId) ||
       !validFolderIds.has(rawFolderId) ||
       !sanitizedName ||
       !isValidCharacterName(rawCharacter) ||
@@ -177,6 +191,10 @@ export function validateAndNormalizeCombos(
 
     const sanitizedSequence: ComboInputToken[] = [];
     for (const token of rawSequence) {
+      if (sanitizedSequence.length >= MAX_COMBO_SEQUENCE_LENGTH) {
+        hadInvalidItems = true;
+        break;
+      }
       if (token === 'f.S') {
         // Normaliza token legado 'f.S' para 'S'
         sanitizedSequence.push('S');
@@ -186,6 +204,11 @@ export function validateAndNormalizeCombos(
       } else {
         hadInvalidItems = true;
       }
+    }
+
+    if (sanitizedSequence.length === 0) {
+      hadInvalidItems = true;
+      continue;
     }
 
     const updatedAt =

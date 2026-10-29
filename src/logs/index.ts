@@ -102,8 +102,34 @@ function sanitizeLogUserMessage(rawMessage: string): string {
 }
 
 /**
+ * Remove caminhos locais de arquivos, URLs internas e pilhas de execução (stack traces)
+ * de detalhes técnicos antes de enviá-los ao console do navegador em produção.
+ */
+function sanitizeTechnicalDetailsForConsole(details: unknown): string {
+  if (!details) {
+    return '';
+  }
+
+  if (details instanceof Error) {
+    const safeName = sanitizeLogUserMessage(details.name || 'Error');
+    const safeMsg = sanitizeLogUserMessage(details.message || '');
+    return `${safeName}: ${safeMsg}`;
+  }
+
+  if (typeof details === 'string') {
+    return sanitizeLogUserMessage(details);
+  }
+
+  try {
+    return sanitizeLogUserMessage(JSON.stringify(details));
+  } catch {
+    return '[Detalhes técnicos omitidos por segurança]';
+  }
+}
+
+/**
  * Registra um erro ou aviso local na memória da sessão e envia detalhes técnicos ao console.
- * Nunca expõe pilhas de execução cruas (stack traces) no texto de `userMessage`.
+ * Nunca expõe pilhas de execução cruas (stack traces) no texto de `userMessage` nem no console.
  * Possui fechamento automático (auto close) após alguns segundos por padrão (`autoDismissMs`).
  */
 export function recordLocalLog(params: {
@@ -141,16 +167,16 @@ export function recordLocalLog(params: {
 
   const formattedConsolePrefix = `[GGST Combo Maker][${entry.level.toUpperCase()}][${entry.code}]`;
   const contextLabel = entry.context ? ` (${entry.context})` : '';
+  const safeTechSummary = sanitizeTechnicalDetailsForConsole(params.technicalDetails);
+  const consoleDetailSuffix = safeTechSummary ? ` | Detalhe: ${safeTechSummary}` : '';
 
   if (entry.level === 'error') {
     console.error(
-      `${formattedConsolePrefix}${contextLabel}: ${entry.userMessage}`,
-      params.technicalDetails ?? ''
+      `${formattedConsolePrefix}${contextLabel}: ${entry.userMessage}${consoleDetailSuffix}`
     );
   } else {
     console.warn(
-      `${formattedConsolePrefix}${contextLabel}: ${entry.userMessage}`,
-      params.technicalDetails ?? ''
+      `${formattedConsolePrefix}${contextLabel}: ${entry.userMessage}${consoleDetailSuffix}`
     );
   }
 

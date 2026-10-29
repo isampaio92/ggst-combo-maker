@@ -145,6 +145,26 @@ export interface LocalDatabaseSchema {
   migrations: MigrationControlState;
 }
 
+/** Limites de segurança para evitar exaustão de memória e abuso no Local Storage */
+export const MAX_ENTITY_ID_LENGTH = 64;
+export const MAX_USER_TEXT_LENGTH = 80;
+export const MAX_COMBO_SEQUENCE_LENGTH = 200;
+export const MAX_STORED_FOLDERS = 500;
+export const MAX_STORED_COMBOS = 2000;
+
+const SAFE_ENTITY_ID_REGEX = /^[a-zA-Z0-9_-]{1,64}$/;
+
+/**
+ * Verifica se um ID de entidade (pasta ou combo) possui formato seguro e tamanho controlado.
+ */
+export function isValidEntityId(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    value.length <= MAX_ENTITY_ID_LENGTH &&
+    SAFE_ENTITY_ID_REGEX.test(value.trim())
+  );
+}
+
 /**
  * Verifica se uma string corresponde a um personagem válido da lista fixa do FSD.
  */
@@ -177,7 +197,7 @@ export function isValidVisualPreference(value: unknown): value is VisualPreferen
  * removendo tags HTML/scripts, caracteres de controle e protocolos perigosos (`javascript:`, `data:`, `vbscript:`)
  * e manipuladores de eventos (`onload=`, `onerror=`, etc.) para prevenção rigorosa contra XSS (FSD seção 24).
  */
-export function sanitizeUserText(raw: unknown, maxLength = 80): string {
+export function sanitizeUserText(raw: unknown, maxLength = MAX_USER_TEXT_LENGTH): string {
   if (typeof raw !== 'string') {
     return '';
   }

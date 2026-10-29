@@ -5,6 +5,7 @@ import {
   type Combo,
   type ComboInputToken,
   type Folder,
+  MAX_COMBO_SEQUENCE_LENGTH,
   type SaveComboResult,
   isValidComboInputToken,
   sanitizeCharacterSelection,
@@ -71,7 +72,7 @@ export function appendInputToken(
   sequence: readonly ComboInputToken[],
   token: ComboInputToken
 ): ComboInputToken[] {
-  if (!isValidComboInputToken(token)) {
+  if (!isValidComboInputToken(token) || sequence.length >= MAX_COMBO_SEQUENCE_LENGTH) {
     return [...sequence];
   }
   return [...sequence, token];
