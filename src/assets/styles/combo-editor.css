@@ -430,24 +430,28 @@
   display: block;
 }
 
-/* Setas Direcionais e Motions: Gradiente de Laranja (#FF6600) para Amarelo (#FFCC00) */
+/* Setas Direcionais e Motions: Gradiente de Laranja (#FF6600) para Amarelo (#FFCC00) com alto contraste (docs/ggst_inputs.png) */
 .ggst-token--directional,
 .ggst-token--motion {
-  border-color: rgba(255, 153, 0, 0.4);
+  color: var(--input-directional-end);
+  border-color: rgba(255, 180, 0, 0.55);
+  padding: 3px;
+}
+
+.ggst-token__dpad-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85));
 }
 
 .ggst-token--directional .ggst-token__text,
 .ggst-token--motion .ggst-token__text {
-  background: linear-gradient(
-    180deg,
-    var(--input-directional-end) 0%,
-    var(--input-directional-start) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
   color: var(--input-directional-end);
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.95));
+  text-shadow:
+    0 1px 0 var(--input-directional-start),
+    0 2px 3px rgba(0, 0, 0, 0.95),
+    0 0 6px rgba(255, 153, 0, 0.45);
 }
 
 /* Modificadores de Ligação (+, >, ~): Conectores em #F5F5F5 */

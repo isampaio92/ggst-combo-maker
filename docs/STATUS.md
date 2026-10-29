@@ -3,7 +3,7 @@
 - **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2), Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3) e Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual — Fase 4) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 4 operacionais).
 - **Fase atual:** Fase 4 concluída / Aguardando início da Fase 5.
 - **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual**.
-- **Última atualização:** 2026-10-29 14:33 (BRT)
+- **Última atualização:** 2026-10-29 14:44 (BRT)
 
 ---
 
@@ -51,7 +51,7 @@
 
 ### Fase 4 — Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual) (CONCLUÍDA)
 - [x] Construir o modal/popup inicial obrigatório ao clicar em "Novo Combo" (`src/views/NewComboModal.tsx`), exigindo nome do combo e seleção de personagem a partir da lista fixa de 33 personagens em ordem alfabética (`validateNewComboMetadata`).
-- [x] Implementar a paleta interativa de botões visuais (`src/views/GameInputTokenBadge.tsx`, `src/views/ComboEditorView.tsx`, `src/models/inputMetadata.ts` e `src/assets/styles/combo-editor.css`) seguindo fielmente as cores e formatos 3D circulares de `docs/DESIGN.md` e `docs/FSD.md` (incluindo o ícone vetorial SVG do botão `Dash` com boneco correndo e aro interno branco `#F5F5F5`).
+- [x] Implementar a paleta interativa de botões visuais (`src/views/GameInputTokenBadge.tsx`, `src/views/ComboEditorView.tsx`, `src/models/inputMetadata.ts` e `src/assets/styles/combo-editor.css`) seguindo fielmente as cores e formatos 3D circulares de `docs/DESIGN.md`, `docs/ggst_inputs.png` e `docs/FSD.md` (incluindo o ícone vetorial SVG do botão `Dash` e os ícones vetoriais SVG com cruz D-Pad 3D e gradiente laranja-amarelo de alto contraste para direcionais e *motions*).
 - [x] Construir a área de renderização sequencial do combo com rolagem horizontal fluida (`overflow-x: auto`) e sem quebra de linha (`white-space: nowrap` / `flex-wrap: nowrap`) para suportar combos extensos.
 - [x] Implementar a edição sequencial (inserção sempre ao final da fila via `appendInputToken`) e o botão "Desfazer" (`undoLastInputToken`, removendo o último item inserido, um a um, de trás para frente, incluindo modificadores).
 - [x] Implementar a lógica de salvamento do combo (`src/controllers/useComboEditorController.ts` e `src/views/DuplicateComboModal.tsx`): criação automática da pasta com o nome do personagem caso ainda não exista, verificação de duplicidade de nome na mesma pasta (emitindo *warning* perguntando se deseja sobrescrever) e atualização do `updated_at`.
