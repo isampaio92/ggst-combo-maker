@@ -1,5 +1,10 @@
 /**
  * Camada Model (MVC)
- * Responsável pelas tipagens TypeScript e comunicação com o Local Storage (Fase 2).
+ * Exporta tipagens das entidades, validadores de schema e Models de persistência no Local Storage.
  */
-export {};
+
+export * from './types';
+export * from './storage';
+export * from './settingsModel';
+export * from './folderModel';
+export * from './comboModel';

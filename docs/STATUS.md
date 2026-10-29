@@ -1,9 +1,9 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Infraestrutura base (Fase 1) e controle de versão Git local concluídos e validados com sucesso (`npm install`, `npm run typecheck`, `npm run build` e commit inicial operacionais).
-- **Fase atual:** Fase 1 + Controle de Versão Git concluídos / Aguardando conexão com repositório remoto no GitHub e início da Fase 2.
-- **Próximo passo recomendado:** Conectar o repositório remoto no GitHub (`git remote add origin ...` e `git push -u origin main`) e iniciar a **Fase 2 — Persistência em Local Storage, Migrations, Logs Locais e Base MVC**.
-- **Última atualização:** 2026-10-29 13:40 (BRT)
+- **Estado atual do projeto:** Infraestrutura base (Fase 1) e Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de persistência/migrations/logs operacionais).
+- **Fase atual:** Fase 2 concluída / Aguardando início da Fase 3.
+- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 3 — Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop**.
+- **Última atualização:** 2026-10-29 14:06 (BRT)
 
 ---
 
@@ -13,9 +13,9 @@
 - [x] **`.gitignore` revisado:** Ajustado para a stack TypeScript + React + Vite (ignorando `node_modules/`, `dist/`, `dist-ssr/`, `.vite/`, `*.tsbuildinfo`, `.env*`, certificados/chaves privadas, `/logs/` apenas na raiz sem afetar `src/logs/`, backups e arquivos de sistema/IDE).
 - [x] **`.gitattributes` criado:** Padronização de finais de linha (`LF`) para códigos-fonte, JSON e Markdown, e marcação binária para imagens (`*.png`, etc.).
 - [x] **Arquivos sensíveis protegidos:** Conferência realizada via `git add --dry-run .` e `git status`; nenhum segredo, `.env` ou cache de build foi versionado.
-- [x] **Commit inicial realizado:** Commit `"Estrutura inicial do projeto"` criado na branch `main`.
-- [ ] **Repositório GitHub:** Pendente de ação do usuário (GitHub CLI `gh` não instalado no ambiente; instruções de criação e conexão via HTTPS/SSH fornecidas ao usuário).
-- [ ] **Push para o GitHub:** Pendente de ação do usuário após criar o repositório remoto (`git push -u origin main`).
+- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`) e commit da Fase 2 na branch `main`.
+- [x] **Repositório GitHub:** Conectado a `origin/main`.
+- [ ] **Push da Fase 2 para o GitHub:** Pendente de ação do usuário (`git push`).
 
 ---
 
@@ -29,12 +29,17 @@
 - [x] Criar o ponto de entrada inicial (`src/main.tsx` e `src/app/App.tsx`) e instalar as dependências locais do projeto.
 - [x] Validar compilação TypeScript e build estático do Vite garantindo que a estrutura bruta de diretórios internos não fique exposta no pacote de produção.
 
-### Fase 2 — Persistência em Local Storage, Migrations, Logs Locais e Base MVC (PENDENTE)
-- [ ] Definir as interfaces e tipos TypeScript das entidades (`Folder`, `Combo`, `Settings`, tipos de inputs e schema do Local Storage) em `src/models/`.
-- [ ] Implementar o mecanismo de log de erros locais em `src/logs/` para captura amigável de falhas (ex.: estouro de cota do Local Storage ou JSON inválido), registro formatado em `console.error` e armazenamento temporário em memória da sessão para exibição de alertas na UI.
-- [ ] Implementar a arquitetura de migrations em `src/database/migrations/` com chave de controle de versões executadas (evitando execuções duplicadas) e inicialização/validação das tabelas lógicas `folders`, `combos` e `settings` e suas constraints de integridade.
-- [ ] Implementar os Models de leitura e escrita segura no Local Storage em `src/models/`.
-- [ ] Criar os Controllers/Hooks base em `src/controllers/` que acionam as migrations silenciosamente no ciclo de inicialização da aplicação React e expõem operações básicas sobre configurações, pastas e combos.
+### Fase 2 — Persistência em Local Storage, Migrations, Logs Locais e Base MVC (CONCLUÍDA)
+- [x] Definir as interfaces e tipos TypeScript das entidades (`Folder`, `Combo`, `Settings`, tipos de inputs e schema do Local Storage) em `src/models/types.ts`.
+- [x] Implementar o mecanismo de log de erros locais em `src/logs/index.ts` para captura amigável de falhas (ex.: estouro de cota do Local Storage ou JSON inválido), registro formatado em `console.error` e armazenamento temporário em memória da sessão para exibição de alertas na UI.
+- [x] Implementar a arquitetura de migrations em `src/database/migrations/001_init_schema.ts` e `src/database/migrations/index.ts` com chave de controle de versões executadas (evitando execuções duplicadas) e inicialização/validação das tabelas lógicas `folders`, `combos` e `settings` e suas constraints de integridade.
+- [x] Implementar os Models de leitura e escrita segura no Local Storage em `src/models/storage.ts`, `src/models/settingsModel.ts`, `src/models/folderModel.ts`, `src/models/comboModel.ts` e `src/models/index.ts`.
+- [x] Criar os Controllers/Hooks base em `src/controllers/useAppController.ts` e `src/controllers/index.ts` que acionam as migrations silenciosamente no ciclo de inicialização da aplicação React (`src/app/App.tsx`) e expõem operações básicas sobre configurações, pastas e combos.
+
+**Resumo de Testes da Fase 2:**
+- `npm run typecheck`: Aprovado sem erros (`tsc --noEmit`).
+- `npm run build`: Aprovado; pacote de produção gerado em `dist/` sem expor diretórios internos.
+- Teste automatizado de integração da camada MVC (`verify_phase2.ts` via Vite SSR Loader): Aprovado (migrations v1, idempotência, ordenação alfabética de pastas, sanitização XSS, criação automática de pasta do personagem, aviso de duplicidade e sobrescrita de combo, preservação de `updated_at` ao mover combo entre pastas, recuperação de JSON corrompido, captura de `QuotaExceededError` e exclusão em cascata).
 
 ### Fase 3 — Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (PENDENTE)
 - [ ] Implementar a listagem indexada na Sidebar (`src/views/` e `src/controllers/`): pastas ordenadas alfabeticamente e combos internos ordenados por `updated_at` decrescente.

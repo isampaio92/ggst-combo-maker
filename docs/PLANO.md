@@ -43,11 +43,11 @@ Preparar o repositório com Vite, React e TypeScript, criar a estrutura de pasta
 Implementar a modelagem de dados em TypeScript, o sistema estruturado de logs de erros locais, a arquitetura de migrations para inicialização e validação segura das chaves lógicas no Local Storage (`folders`, `combos`, `settings`) e a camada Model/Controller base de acesso aos dados.
 
 ### Checklist de tarefas
-- [ ] Definir as interfaces e tipos TypeScript das entidades (`Folder`, `Combo`, `Settings`, tipos de inputs e schema do Local Storage) em `src/models/`.
-- [ ] Implementar o mecanismo de log de erros locais em `src/logs/` para captura amigável de falhas (ex.: estouro de cota do Local Storage ou JSON inválido), registro formatado em `console.error` e armazenamento temporário em memória da sessão para exibição de alertas na UI.
-- [ ] Implementar a arquitetura de migrations em `src/database/migrations/` com chave de controle de versões executadas (evitando execuções duplicadas) e inicialização/validação das tabelas lógicas `folders`, `combos` e `settings` e suas constraints de integridade.
-- [ ] Implementar os Models de leitura e escrita segura no Local Storage em `src/models/`.
-- [ ] Criar os Controllers/Hooks base em `src/controllers/` que acionam as migrations silenciosamente no ciclo de inicialização da aplicação React e expõem operações básicas sobre configurações, pastas e combos.
+- [x] Definir as interfaces e tipos TypeScript das entidades (`Folder`, `Combo`, `Settings`, tipos de inputs e schema do Local Storage) em `src/models/`.
+- [x] Implementar o mecanismo de log de erros locais em `src/logs/` para captura amigável de falhas (ex.: estouro de cota do Local Storage ou JSON inválido), registro formatado em `console.error` e armazenamento temporário em memória da sessão para exibição de alertas na UI.
+- [x] Implementar a arquitetura de migrations em `src/database/migrations/` com chave de controle de versões executadas (evitando execuções duplicadas) e inicialização/validação das tabelas lógicas `folders`, `combos` e `settings` e suas constraints de integridade.
+- [x] Implementar os Models de leitura e escrita segura no Local Storage em `src/models/`.
+- [x] Criar os Controllers/Hooks base em `src/controllers/` que acionam as migrations silenciosamente no ciclo de inicialização da aplicação React e expõem operações básicas sobre configurações, pastas e combos.
 
 ### Critérios de pronto
 - Ao iniciar a aplicação, o sistema executa as migrations pendentes silenciosamente e materializa as estruturas JSON (`folders`, `combos`, `settings` e controle de migrations) no Local Storage sem duplicidade.

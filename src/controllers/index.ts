@@ -1,5 +1,6 @@
 /**
  * Camada Controller (MVC)
- * Responsável pelos Hooks customizados, validações e regras de negócio (Fase 2 em diante).
+ * Exporta os Hooks customizados e controladores de estado e regras de negócio.
  */
-export {};
+
+export * from './useAppController';
