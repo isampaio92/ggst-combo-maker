@@ -5,3 +5,4 @@
 
 export * from './useAppController';
 export * from './useSidebarController';
+export * from './useComboEditorController';

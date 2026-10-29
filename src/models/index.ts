@@ -4,6 +4,7 @@
  */
 
 export * from './types';
+export * from './inputMetadata';
 export * from './storage';
 export * from './settingsModel';
 export * from './folderModel';

@@ -1,0 +1,468 @@
+/**
+ * Estilos do Módulo de Criação e Edição de Combos (Fase 4).
+ * Segue estritamente o Design System de Guilty Gear -Strive- (docs/DESIGN.md e docs/FSD.md):
+ * - Interface geral com cantos retos (0px)
+ * - Botões de input perfeitamente circulares (50%, aspect-ratio 1/1) com efeito 3D (radial-gradient e box-shadow)
+ * - Uso semântico exclusivo das cores de input (P #FF77CC, K #33CCFF, c.S/f.S #00E676, HS #FF3333, D #FF9900, RC #E31818/#FF3333, Dash SVG #F5F5F5, Direcionais/Motions gradiente #FF6600 a #FFCC00)
+ * - Área de sequência com rolagem horizontal fluida (overflow-x: auto) e sem quebra de linha
+ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sidebar__header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+/* Select de Personagem Minimalista (docs/DESIGN.md seção 7) */
+.ggst-select {
+  width: 100%;
+  background-color: var(--bg-input-field);
+  color: var(--text-primary);
+  border: none;
+  border-bottom: 2px solid var(--border-input);
+  border-radius: var(--radius-ui);
+  padding: var(--space-sm) var(--space-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ggst-select:focus {
+  outline: none;
+  border-bottom-color: var(--brand-red);
+  box-shadow: 0 2px 6px rgba(227, 24, 24, 0.25);
+}
+
+.ggst-select option {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Modal de Novo Combo e Modal de Sobrescrita (Duplicidade) */
+.modal-card--new-combo {
+  max-width: 520px;
+}
+
+.modal-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modal-card__kicker {
+  color: var(--brand-red);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.modal-card__title--primary {
+  color: var(--text-primary);
+  font-size: 1.9rem;
+}
+
+.modal-card--warning {
+  border-top-color: var(--state-warning);
+}
+
+.modal-card__title--warning {
+  color: var(--state-warning);
+}
+
+.modal-card__warning--orange {
+  background-color: rgba(255, 153, 0, 0.12);
+  border-left: 3px solid var(--state-warning);
+}
+
+.new-combo-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.new-combo-form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-system-warning {
+  background-color: transparent;
+  color: var(--state-warning);
+  border: 2px solid var(--state-warning);
+  border-radius: var(--radius-ui);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-system-warning:hover,
+.btn-system-warning:focus-visible {
+  background-color: var(--state-warning);
+  color: #121212;
+  outline: none;
+}
+
+.btn-system-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Container Principal do Editor de Combos */
+.combo-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.combo-editor__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-md);
+}
+
+.combo-editor__identity {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.combo-editor__meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.combo-editor__mode-badge {
+  background-color: var(--brand-red);
+  color: var(--text-primary);
+  padding: 2px var(--space-sm);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.combo-editor__separator {
+  color: var(--text-secondary);
+}
+
+.combo-editor__character {
+  color: var(--text-primary);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.combo-editor__name-row {
+  max-width: 480px;
+}
+
+.combo-editor__name-input {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.combo-editor__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.combo-editor__feedback-success {
+  padding: var(--space-xs) var(--space-sm);
+  background-color: rgba(0, 230, 118, 0.12);
+  border-left: 3px solid var(--state-success);
+  color: var(--state-success);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Área de Renderização Sequencial do Combo (overflow-x: auto, sem quebra de linha) */
+.combo-sequence-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.combo-sequence-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.combo-sequence-section__title {
+  font-size: 1.35rem;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.combo-sequence-section__hint {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.combo-sequence-track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  min-height: 92px;
+  padding: var(--space-md);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--brand-red);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.65);
+}
+
+.combo-sequence-track__item {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.combo-sequence-track__empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+  white-space: normal;
+}
+
+/* Paleta Interativa de Inputs */
+.input-palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.input-palette__group {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-top: 2px solid var(--brand-red);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.input-palette__group--full {
+  grid-column: 1 / -1;
+}
+
+.input-palette__group-title {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #242424;
+  padding-bottom: var(--space-xs);
+}
+
+.input-palette__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+/* Botões Visuais 3D de Input do Jogo (docs/DESIGN.md seções 2, 5 e 6.B) */
+.ggst-token {
+  border-radius: var(--radius-input-btn);
+  aspect-ratio: 1 / 1;
+  background: radial-gradient(
+    circle at 35% 30%,
+    var(--btn-base-start) 0%,
+    #2A2A2A 55%,
+    var(--btn-base-end) 100%
+  );
+  border: 2px solid #1A1A1A;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.16),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.7),
+    0 3px 6px rgba(0, 0, 0, 0.75);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-input);
+  font-weight: 800;
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+  position: relative;
+  padding: 2px;
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.95),
+    0 0 2px rgba(0, 0, 0, 0.85);
+}
+
+.ggst-token--sm {
+  width: 42px;
+  height: 42px;
+  font-size: 0.9rem;
+}
+
+.ggst-token--md {
+  width: 52px;
+  height: 52px;
+  font-size: 1.05rem;
+}
+
+.ggst-token--lg {
+  width: 58px;
+  height: 58px;
+  font-size: 1.25rem;
+}
+
+.ggst-token--interactive {
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.ggst-token--interactive:hover,
+.ggst-token--interactive:focus-visible {
+  transform: translateY(-2px) scale(1.04);
+  filter: brightness(1.12);
+  outline: none;
+}
+
+.ggst-token--interactive:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+.ggst-token__text {
+  display: inline-block;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.ggst-token__text--compact {
+  font-size: 0.72em;
+  letter-spacing: -0.04em;
+}
+
+/* Mapeamento semântico de cores exclusivas dos inputs (docs/DESIGN.md seção 2) */
+
+/* Punch (P): #FF77CC */
+.ggst-token--punch {
+  color: var(--input-punch);
+  border-color: rgba(255, 119, 204, 0.4);
+}
+
+/* Kick (K): #33CCFF */
+.ggst-token--kick {
+  color: var(--input-kick);
+  border-color: rgba(51, 204, 255, 0.4);
+}
+
+/* Slash (c.S / f.S): #00E676 */
+.ggst-token--slash {
+  color: var(--input-slash);
+  border-color: rgba(0, 230, 118, 0.4);
+}
+
+/* Heavy Slash (HS): #FF3333 */
+.ggst-token--heavy-slash {
+  color: var(--input-heavy-slash);
+  border-color: rgba(255, 51, 51, 0.45);
+}
+
+/* Dust (D): #FF9900 */
+.ggst-token--dust {
+  color: var(--input-dust);
+  border-color: rgba(255, 153, 0, 0.45);
+}
+
+/* Red Roman Cancel (RC): Borda/destaque em vermelho (#E31818 / #FF3333) sobre botão circular escuro */
+.ggst-token--rc {
+  color: var(--input-rc-text);
+  border: 2px solid var(--input-rc-border);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 51, 51, 0.25),
+    0 0 8px rgba(227, 24, 24, 0.45),
+    0 3px 6px rgba(0, 0, 0, 0.75);
+}
+
+/* Dash: Botão circular escuro com ícone SVG de boneco correndo e aro interno em branco (#F5F5F5) */
+.ggst-token--dash {
+  color: var(--input-dash);
+  border-color: rgba(245, 245, 245, 0.35);
+  padding: 4px;
+}
+
+.ggst-token__dash-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Setas Direcionais e Motions: Gradiente de Laranja (#FF6600) para Amarelo (#FFCC00) */
+.ggst-token--directional,
+.ggst-token--motion {
+  border-color: rgba(255, 153, 0, 0.4);
+}
+
+.ggst-token--directional .ggst-token__text,
+.ggst-token--motion .ggst-token__text {
+  background: linear-gradient(
+    180deg,
+    var(--input-directional-end) 0%,
+    var(--input-directional-start) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--input-directional-end);
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.95));
+}
+
+/* Modificadores de Ligação (+, >, ~): Conectores em #F5F5F5 */
+.ggst-token--connector {
+  color: var(--input-modifier);
+  border-color: rgba(245, 245, 245, 0.35);
+  font-size: 1.25rem;
+}
+
+/* Counter Hit (CH): Destaque em vermelho/laranja de alerta (#E31818 / #FF9900) */
+.ggst-token--ch {
+  color: var(--input-ch-text);
+  border: 2px solid var(--input-ch-border);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 153, 0, 0.25),
+    0 0 8px rgba(227, 24, 24, 0.4),
+    0 3px 6px rgba(0, 0, 0, 0.75);
+}

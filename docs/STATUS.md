@@ -1,9 +1,9 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2) e Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 3 operacionais).
-- **Fase atual:** Fase 3 concluída / Aguardando início da Fase 4.
-- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 4 — Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual)**.
-- **Última atualização:** 2026-10-29 14:19 (BRT)
+- **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2), Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3) e Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual — Fase 4) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 4 operacionais).
+- **Fase atual:** Fase 4 concluída / Aguardando início da Fase 5.
+- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual**.
+- **Última atualização:** 2026-10-29 14:33 (BRT)
 
 ---
 
@@ -13,9 +13,9 @@
 - [x] **`.gitignore` revisado:** Ajustado para a stack TypeScript + React + Vite (ignorando `node_modules/`, `dist/`, `dist-ssr/`, `.vite/`, `*.tsbuildinfo`, `.env*`, certificados/chaves privadas, `/logs/` apenas na raiz sem afetar `src/logs/`, backups e arquivos de sistema/IDE).
 - [x] **`.gitattributes` criado:** Padronização de finais de linha (`LF`) para códigos-fonte, JSON e Markdown, e marcação binária para imagens (`*.png`, etc.).
 - [x] **Arquivos sensíveis protegidos:** Conferência realizada via `git add --dry-run .` e `git status`; nenhum segredo, `.env` ou cache de build foi versionado.
-- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2 e commit da Fase 3 na branch `main`.
+- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3 e commit da Fase 4 na branch `main`.
 - [x] **Repositório GitHub:** Conectado a `origin/main`.
-- [ ] **Push da Fase 3 para o GitHub:** Pendente de ação do usuário (`git push`).
+- [ ] **Push da Fase 4 para o GitHub:** Pendente de ação do usuário (`git push`).
 
 ---
 
@@ -49,12 +49,17 @@
 - `npm run build`: Aprovado; pacote de produção gerado em `dist/` sem expor diretórios internos.
 - Teste automatizado de integração da Fase 3 (`verify_phase3.ts` via Vite SSR Loader): Aprovado (renderização do Estado Vazio na Sidebar, criação de pastas e bloqueio de duplicidade, árvore indexada com pastas em ordem alfabética e combos em ordem decrescente de `updated_at`, bloqueio de renomeação duplicada de pasta e combo, transferência de combo entre pastas via Drag and Drop preservando intacto o `updated_at`, renderização do modal de confirmação de exclusão e remoção definitiva em cascata).
 
-### Fase 4 — Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual) (PENDENTE)
-- [ ] Construir o modal/popup inicial obrigatório ao clicar em "Novo Combo", exigindo nome do combo e seleção de personagem a partir da lista fixa de 33 personagens em ordem alfabética.
-- [ ] Implementar a paleta interativa de botões visuais seguindo fielmente as cores e formatos 3D circulares de `docs/DESIGN.md` e `docs/FSD.md`.
-- [ ] Construir a área de renderização sequencial do combo com rolagem horizontal fluida (`overflow-x: auto`) e sem quebra de linha (`white-space: nowrap` / `flex-wrap: nowrap`) para suportar combos extensos.
-- [ ] Implementar a edição sequencial (inserção sempre ao final da fila) e o botão "Desfazer" (removendo o último item inserido, um a um, de trás para frente, incluindo modificadores).
-- [ ] Implementar a lógica de salvamento do combo: criação automática da pasta com o nome do personagem caso ainda não exista, verificação de duplicidade de nome na mesma pasta (emitindo *warning* perguntando se deseja sobrescrever) e atualização do `updated_at`.
+### Fase 4 — Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual) (CONCLUÍDA)
+- [x] Construir o modal/popup inicial obrigatório ao clicar em "Novo Combo" (`src/views/NewComboModal.tsx`), exigindo nome do combo e seleção de personagem a partir da lista fixa de 33 personagens em ordem alfabética (`validateNewComboMetadata`).
+- [x] Implementar a paleta interativa de botões visuais (`src/views/GameInputTokenBadge.tsx`, `src/views/ComboEditorView.tsx`, `src/models/inputMetadata.ts` e `src/assets/styles/combo-editor.css`) seguindo fielmente as cores e formatos 3D circulares de `docs/DESIGN.md` e `docs/FSD.md` (incluindo o ícone vetorial SVG do botão `Dash` com boneco correndo e aro interno branco `#F5F5F5`).
+- [x] Construir a área de renderização sequencial do combo com rolagem horizontal fluida (`overflow-x: auto`) e sem quebra de linha (`white-space: nowrap` / `flex-wrap: nowrap`) para suportar combos extensos.
+- [x] Implementar a edição sequencial (inserção sempre ao final da fila via `appendInputToken`) e o botão "Desfazer" (`undoLastInputToken`, removendo o último item inserido, um a um, de trás para frente, incluindo modificadores).
+- [x] Implementar a lógica de salvamento do combo (`src/controllers/useComboEditorController.ts` e `src/views/DuplicateComboModal.tsx`): criação automática da pasta com o nome do personagem caso ainda não exista, verificação de duplicidade de nome na mesma pasta (emitindo *warning* perguntando se deseja sobrescrever) e atualização do `updated_at`.
+
+**Resumo de Testes da Fase 4:**
+- `npm run typecheck`: Aprovado sem erros (`tsc --noEmit`).
+- `npm run build`: Aprovado; pacote de produção gerado em `dist/` sem expor diretórios internos.
+- Teste automatizado de integração da Fase 4 (`verify_phase4.ts` via Vite SSR Loader): Aprovado (validação obrigatória de nome e personagem da lista oficial de 33 personagens, verificação dos 30 tokens de input e suas classes visuais + SVG do Dash, inserção no fim da fila e remoção um a um via Desfazer incluindo modificadores, criação automática da pasta do personagem ao salvar, bloqueio de duplicidade com `duplicate_warning` e sobrescrita após confirmação).
 
 ### Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual (PENDENTE)
 - [ ] Implementar o Modo de Leitura Protegido: ao selecionar um combo na Sidebar, exibir a sequência em linha de forma estática (sem paleta ativa), oferecendo os botões "Editar" e "Copiar como Texto".

@@ -5,3 +5,7 @@
 
 export * from './ConfirmDeleteModal';
 export * from './SidebarView';
+export * from './GameInputTokenBadge';
+export * from './NewComboModal';
+export * from './DuplicateComboModal';
+export * from './ComboEditorView';

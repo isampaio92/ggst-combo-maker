@@ -8,6 +8,7 @@ export interface SidebarViewProps {
   combos: readonly Combo[];
   selectedComboId: string | null;
   onSelectCombo: (comboId: string | null) => void;
+  onRequestNewCombo: () => void;
   createFolder: (name: string) => Folder | null;
   renameFolder: (folderId: string, newName: string) => Folder | null;
   deleteFolder: (folderId: string) => boolean;
@@ -85,14 +86,24 @@ export const SidebarView: React.FC<SidebarViewProps> = (props) => {
     <aside className="sidebar" aria-label="Organização de Pastas e Combos">
       <div className="sidebar__header">
         <h2 className="sidebar__title">PASTAS / COMBOS</h2>
-        <button
-          type="button"
-          className="btn-system-primary"
-          onClick={openCreateFolderForm}
-          title="Criar uma nova pasta livre"
-        >
-          + Nova Pasta
-        </button>
+        <div className="sidebar__header-actions">
+          <button
+            type="button"
+            className="btn-system-secondary"
+            onClick={openCreateFolderForm}
+            title="Criar uma nova pasta livre"
+          >
+            + Nova Pasta
+          </button>
+          <button
+            type="button"
+            className="btn-system-primary"
+            onClick={props.onRequestNewCombo}
+            title="Iniciar a criação de um novo combo (seleção obrigatória de personagem)"
+          >
+            + Novo Combo
+          </button>
+        </div>
       </div>
 
       {isCreatingFolder && (
