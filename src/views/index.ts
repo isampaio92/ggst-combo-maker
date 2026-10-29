@@ -1,5 +1,7 @@
 /**
  * Camada View (MVC)
- * Responsável pelos componentes visuais e telas React (Fase 3 em diante).
+ * Exporta os componentes visuais da interface GGST Combo Maker.
  */
-export {};
+
+export * from './ConfirmDeleteModal';
+export * from './SidebarView';

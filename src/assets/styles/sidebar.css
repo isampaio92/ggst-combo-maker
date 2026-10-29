@@ -1,0 +1,551 @@
+/**
+ * Estilos do Módulo de Organização (Sidebar) e Modais de Confirmação.
+ * Segue rigorosamente o Design System de Guilty Gear -Strive- (docs/DESIGN.md):
+ * - Tema Rock/Metal Moderno, Dark Mode de alto contraste
+ * - Bordas retas (0px) para cards, menus, modais e botões do sistema
+ * - Cores semânticas de interface (#121212, #1E1E1E, #F5F5F5, #A0A0A0, #E31818)
+ */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.app-header {
+  background-color: var(--bg-secondary);
+  border-top: 4px solid var(--brand-red);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: 0 4px 0px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.app-header__title {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.app-header__subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.app-header__status {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* Alertas de Log Local (Erros e Avisos) */
+.app-alerts {
+  padding: var(--space-md) var(--space-lg) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.app-alert-card {
+  background-color: var(--bg-secondary);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  border-radius: var(--radius-ui);
+}
+
+.app-alert-card--error {
+  border-left: 4px solid var(--state-error);
+}
+
+.app-alert-card--warning {
+  border-left: 4px solid var(--state-warning);
+}
+
+/* Layout Principal com Sidebar e Área de Conteúdo */
+.app-workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .app-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Botões do Sistema (docs/DESIGN.md seção 6.A) */
+.btn-system-primary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--brand-red);
+  border-radius: var(--radius-ui);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.btn-system-primary:hover,
+.btn-system-primary:focus-visible {
+  background-color: var(--brand-red);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.btn-system-secondary {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-ui);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.btn-system-secondary:hover,
+.btn-system-secondary:focus-visible {
+  background-color: #333333;
+  outline: none;
+}
+
+.btn-system-danger {
+  background-color: transparent;
+  color: var(--state-error);
+  border: 2px solid var(--state-error);
+  border-radius: var(--radius-ui);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-system-danger:hover,
+.btn-system-danger:focus-visible {
+  background-color: var(--state-error);
+  color: #121212;
+  outline: none;
+}
+
+.btn-icon {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  border-radius: var(--radius-ui);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-icon:hover,
+.btn-icon:focus-visible {
+  color: var(--text-primary);
+  background-color: #2A2A2A;
+  border-color: var(--border-subtle);
+  outline: none;
+}
+
+.btn-icon--danger:hover,
+.btn-icon--danger:focus-visible {
+  color: var(--state-error);
+  border-color: var(--state-error);
+}
+
+/* Inputs de Texto Minimalistas (docs/DESIGN.md seção 7) */
+.ggst-label {
+  display: block;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-xs);
+}
+
+.ggst-input {
+  width: 100%;
+  background-color: var(--bg-input-field);
+  color: var(--text-primary);
+  border: none;
+  border-bottom: 2px solid var(--border-input);
+  border-radius: var(--radius-ui);
+  padding: var(--space-sm) var(--space-sm);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ggst-input:focus {
+  outline: none;
+  border-bottom-color: var(--brand-red);
+  box-shadow: 0 2px 6px rgba(227, 24, 24, 0.25);
+}
+
+/* Sidebar — Módulo de Organização */
+.sidebar {
+  background-color: var(--bg-secondary);
+  border-top: 4px solid var(--brand-red);
+  border-radius: var(--radius-ui);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__header {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.sidebar__title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.sidebar__create-box {
+  padding: var(--space-md);
+  background-color: #161616;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sidebar__create-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: stretch;
+}
+
+.sidebar__feedback-error {
+  margin-top: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: rgba(255, 51, 51, 0.12);
+  border-left: 3px solid var(--state-error);
+  color: var(--state-error);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* Estado Vazio (docs/DESIGN.md seção 9: Ícones #333333, texto #A0A0A0, sem contornos) */
+.sidebar__empty {
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  border: none;
+}
+
+.sidebar__empty-icon {
+  color: var(--state-empty);
+  width: 48px;
+  height: 48px;
+}
+
+.sidebar__empty-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.sidebar__empty-text {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+/* Lista de Pastas e Combos */
+.sidebar__folder-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.folder-item {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.folder-item--drag-over {
+  background-color: rgba(227, 24, 24, 0.14);
+  outline: 2px dashed var(--brand-red);
+  outline-offset: -2px;
+}
+
+.folder-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background-color: #1A1A1A;
+  gap: var(--space-sm);
+}
+
+.folder-item__toggle {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  flex: 1;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.folder-item__toggle:hover {
+  color: var(--brand-red);
+}
+
+.folder-item__count {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+  padding: 2px 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.folder-item__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.folder-item__rename-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background-color: #161616;
+  width: 100%;
+}
+
+.folder-item__rename-controls {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+/* Lista interna de Combos da Pasta */
+.combo-list {
+  list-style: none;
+  background-color: var(--bg-primary);
+  padding: var(--space-xs) 0;
+}
+
+.combo-list__empty {
+  padding: var(--space-sm) var(--space-lg);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+.combo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-lg);
+  border-left: 4px solid transparent;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+  gap: var(--space-sm);
+  cursor: grab;
+}
+
+.combo-item:active {
+  cursor: grabbing;
+}
+
+.combo-item:hover {
+  background-color: #1A1A1A;
+}
+
+.combo-item--active {
+  background-color: #1E1E1E;
+  border-left-color: var(--brand-red);
+}
+
+.combo-item--dragging {
+  opacity: 0.55;
+  background-color: #252525;
+}
+
+.combo-item__select {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  text-align: left;
+  flex: 1;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.combo-item__name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.combo-item__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.combo-item__character {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.combo-item__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+/* Modal de Confirmação de Exclusão (docs/DESIGN.md seções 5, 8 e 9) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  z-index: 1000;
+}
+
+.modal-card {
+  background-color: var(--bg-secondary);
+  border-top: 4px solid var(--brand-red);
+  border-left: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: var(--radius-ui);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.9);
+  width: 100%;
+  max-width: 460px;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.modal-card__title {
+  font-size: 1.75rem;
+  color: var(--state-error);
+  line-height: 1.1;
+}
+
+.modal-card__description {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.modal-card__warning {
+  background-color: rgba(255, 51, 51, 0.1);
+  border-left: 3px solid var(--state-error);
+  padding: var(--space-sm);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.modal-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+/* Painel Principal (Estágio / Visualizador de Combo Selecionado) */
+.stage-panel {
+  background-color: var(--bg-secondary);
+  border-top: 4px solid var(--brand-red);
+  border-radius: var(--radius-ui);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  padding: var(--space-lg);
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}

@@ -1,9 +1,9 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Infraestrutura base (Fase 1) e Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de persistência/migrations/logs operacionais).
-- **Fase atual:** Fase 2 concluída / Aguardando início da Fase 3.
-- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 3 — Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop**.
-- **Última atualização:** 2026-10-29 14:06 (BRT)
+- **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2) e Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 3 operacionais).
+- **Fase atual:** Fase 3 concluída / Aguardando início da Fase 4.
+- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 4 — Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual)**.
+- **Última atualização:** 2026-10-29 14:19 (BRT)
 
 ---
 
@@ -13,9 +13,9 @@
 - [x] **`.gitignore` revisado:** Ajustado para a stack TypeScript + React + Vite (ignorando `node_modules/`, `dist/`, `dist-ssr/`, `.vite/`, `*.tsbuildinfo`, `.env*`, certificados/chaves privadas, `/logs/` apenas na raiz sem afetar `src/logs/`, backups e arquivos de sistema/IDE).
 - [x] **`.gitattributes` criado:** Padronização de finais de linha (`LF`) para códigos-fonte, JSON e Markdown, e marcação binária para imagens (`*.png`, etc.).
 - [x] **Arquivos sensíveis protegidos:** Conferência realizada via `git add --dry-run .` e `git status`; nenhum segredo, `.env` ou cache de build foi versionado.
-- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`) e commit da Fase 2 na branch `main`.
+- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2 e commit da Fase 3 na branch `main`.
 - [x] **Repositório GitHub:** Conectado a `origin/main`.
-- [ ] **Push da Fase 2 para o GitHub:** Pendente de ação do usuário (`git push`).
+- [ ] **Push da Fase 3 para o GitHub:** Pendente de ação do usuário (`git push`).
 
 ---
 
@@ -36,18 +36,18 @@
 - [x] Implementar os Models de leitura e escrita segura no Local Storage em `src/models/storage.ts`, `src/models/settingsModel.ts`, `src/models/folderModel.ts`, `src/models/comboModel.ts` e `src/models/index.ts`.
 - [x] Criar os Controllers/Hooks base em `src/controllers/useAppController.ts` e `src/controllers/index.ts` que acionam as migrations silenciosamente no ciclo de inicialização da aplicação React (`src/app/App.tsx`) e expõem operações básicas sobre configurações, pastas e combos.
 
-**Resumo de Testes da Fase 2:**
+### Fase 3 — Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (CONCLUÍDA)
+- [x] Implementar a listagem indexada na Sidebar (`src/views/SidebarView.tsx` e `src/controllers/useSidebarController.ts`): pastas ordenadas alfabeticamente e combos internos ordenados por `updated_at` decrescente (`buildIndexedFolderTree`).
+- [x] Exibir mensagem instrutiva de Estado Vazio (`#A0A0A0` / `#333333`) quando não houver pastas ou combos cadastrados.
+- [x] Implementar criação manual de pastas livres com validação de nome obrigatório e único (`validateFolderNameUniqueness`).
+- [x] Implementar renomeação de pastas e de combos através do ícone de lápis na listagem, bloqueando nomes já em uso no mesmo nível com mensagem de erro (`validateComboRenameUniqueness` e feedback inline + log local).
+- [x] Implementar exclusão de pastas (e seus combos internos) e de combos individuais com aviso obrigatório de confirmação na tela (`src/views/ConfirmDeleteModal.tsx`) e remoção definitiva do Local Storage (sem *soft delete*).
+- [x] Implementar o recurso de *Drag and Drop* permitindo arrastar e soltar combos entre pastas, atualizando o `folder_id` sem alterar a data de edição (`updated_at`).
+
+**Resumo de Testes da Fase 3:**
 - `npm run typecheck`: Aprovado sem erros (`tsc --noEmit`).
 - `npm run build`: Aprovado; pacote de produção gerado em `dist/` sem expor diretórios internos.
-- Teste automatizado de integração da camada MVC (`verify_phase2.ts` via Vite SSR Loader): Aprovado (migrations v1, idempotência, ordenação alfabética de pastas, sanitização XSS, criação automática de pasta do personagem, aviso de duplicidade e sobrescrita de combo, preservação de `updated_at` ao mover combo entre pastas, recuperação de JSON corrompido, captura de `QuotaExceededError` e exclusão em cascata).
-
-### Fase 3 — Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (PENDENTE)
-- [ ] Implementar a listagem indexada na Sidebar (`src/views/` e `src/controllers/`): pastas ordenadas alfabeticamente e combos internos ordenados por `updated_at` decrescente.
-- [ ] Exibir mensagem instrutiva de Estado Vazio (`#A0A0A0` / `#333333`) quando não houver pastas ou combos cadastrados.
-- [ ] Implementar criação manual de pastas livres com validação de nome obrigatório e único.
-- [ ] Implementar renomeação de pastas e de combos através do ícone de lápis na listagem, bloqueando nomes já em uso no mesmo nível com mensagem de erro.
-- [ ] Implementar exclusão de pastas (e seus combos internos) e de combos individuais com aviso obrigatório de confirmação na tela e remoção definitiva do Local Storage (sem *soft delete*).
-- [ ] Implementar o recurso de *Drag and Drop* permitindo arrastar e soltar combos entre pastas, atualizando o `folder_id` sem alterar a data de edição (`updated_at`).
+- Teste automatizado de integração da Fase 3 (`verify_phase3.ts` via Vite SSR Loader): Aprovado (renderização do Estado Vazio na Sidebar, criação de pastas e bloqueio de duplicidade, árvore indexada com pastas em ordem alfabética e combos em ordem decrescente de `updated_at`, bloqueio de renomeação duplicada de pasta e combo, transferência de combo entre pastas via Drag and Drop preservando intacto o `updated_at`, renderização do modal de confirmação de exclusão e remoção definitiva em cascata).
 
 ### Fase 4 — Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual) (PENDENTE)
 - [ ] Construir o modal/popup inicial obrigatório ao clicar em "Novo Combo", exigindo nome do combo e seleção de personagem a partir da lista fixa de 33 personagens em ordem alfabética.

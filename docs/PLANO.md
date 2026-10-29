@@ -72,12 +72,12 @@ Implementar a modelagem de dados em TypeScript, o sistema estruturado de logs de
 Construir a barra lateral (Sidebar) de organização de pastas e combos, contemplando listagem ordenada (pastas em ordem alfabética e combos por `updated_at` decrescente), estado vazio instrutivo, criação manual de pastas, renomeação com validação de duplicidade, exclusão definitiva com confirmação e movimentação de combos via *Drag and Drop*.
 
 ### Checklist de tarefas
-- [ ] Implementar a listagem indexada na Sidebar (`src/views/` e `src/controllers/`): pastas ordenadas alfabeticamente e combos internos ordenados por `updated_at` decrescente.
-- [ ] Exibir mensagem instrutiva de Estado Vazio (`#A0A0A0` / `#333333`) quando não houver pastas ou combos cadastrados.
-- [ ] Implementar criação manual de pastas livres com validação de nome obrigatório e único.
-- [ ] Implementar renomeação de pastas e de combos através do ícone de lápis na listagem, bloqueando nomes já em uso no mesmo nível com mensagem de erro.
-- [ ] Implementar exclusão de pastas (e seus combos internos) e de combos individuais com aviso obrigatório de confirmação na tela e remoção definitiva do Local Storage (sem *soft delete*).
-- [ ] Implementar o recurso de *Drag and Drop* permitindo arrastar e soltar combos entre pastas, atualizando o `folder_id` sem alterar a data de edição (`updated_at`).
+- [x] Implementar a listagem indexada na Sidebar (`src/views/` e `src/controllers/`): pastas ordenadas alfabeticamente e combos internos ordenados por `updated_at` decrescente.
+- [x] Exibir mensagem instrutiva de Estado Vazio (`#A0A0A0` / `#333333`) quando não houver pastas ou combos cadastrados.
+- [x] Implementar criação manual de pastas livres com validação de nome obrigatório e único.
+- [x] Implementar renomeação de pastas e de combos através do ícone de lápis na listagem, bloqueando nomes já em uso no mesmo nível com mensagem de erro.
+- [x] Implementar exclusão de pastas (e seus combos internos) e de combos individuais com aviso obrigatório de confirmação na tela e remoção definitiva do Local Storage (sem *soft delete*).
+- [x] Implementar o recurso de *Drag and Drop* permitindo arrastar e soltar combos entre pastas, atualizando o `folder_id` sem alterar a data de edição (`updated_at`).
 
 ### Critérios de pronto
 - Pastas listadas em ordem alfabética e combos ordenados por data de última alteração (decrescente).
