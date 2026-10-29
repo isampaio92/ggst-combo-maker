@@ -1,10 +1,18 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6), a **Revisão Final de Segurança Pré-Publicação**, a **Documentação Final de Manutenção**, a **Configuração de Deploy Manual para o GitHub Pages** e o **Ajuste Visual de Cabeçalho e Legenda de Motions** foram integralmente concluídos e validados com sucesso.
-- **Fase atual:** Modo Manutenção — Ajuste visual concluído (remoção do indicador `Status DB Local` do cabeçalho e inclusão da legenda discreta de Comandos Especiais / Motions).
+- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6), a **Revisão Final de Segurança Pré-Publicação**, a **Documentação Final de Manutenção**, a **Configuração de Deploy Manual para o GitHub Pages**, o **Ajuste Visual de Cabeçalho e Legenda de Motions** e a **Criação do `README.md` na Raiz do Projeto** foram integralmente concluídos e validados com sucesso.
+- **Fase atual:** Modo Manutenção — Documentação principal do repositório (`README.md`) concluída.
 - **Pendências:** Ações manuais do usuário: (1) executar `git push origin main` para enviar os commits e o workflow ao GitHub; (2) em **Settings -> Pages** do repositório no GitHub, definir **Source** como **GitHub Actions**; e (3) disparar manualmente o workflow **Deploy GitHub Pages** na aba **Actions**.
-- **Próximo passo recomendado:** Executar `git push origin main`, habilitar `Source: GitHub Actions` nas configurações do GitHub Pages e acionar `Run workflow` na aba Actions.
-- **Última atualização:** 2026-10-29 16:15 (BRT)
+- **Próximo passo recomendado:** Realizar commit do `README.md` e `docs/STATUS.md`, executar `git push origin main`, habilitar `Source: GitHub Actions` nas configurações do GitHub Pages e acionar `Run workflow` na aba Actions.
+- **Última atualização:** 2026-10-29 16:25 (BRT)
+
+---
+
+## Manutenção Documental — Criação do `README.md` na Raiz do Projeto (CONCLUÍDA)
+
+- [x] **`README.md` criado na raiz do projeto:** Documento completo e estruturado em português do Brasil contendo **Sobre o Projeto** (incluindo o link público de demonstração no GitHub Pages: `https://isampaio92.github.io/ggst-combo-maker/`), **Funcionalidades Principais** (paleta de ataques, direcionais SVG, *motions* com legenda explicativa, conectores/mecânicas, toggle `Setas`/`Numpad`, exportação textual Numpad e organização em pastas com *Drag and Drop*), **Tecnologias e Arquitetura** (TypeScript `strict`, React 19, CSS3 nativo com variáveis, Vite, padrão MVC e persistência local via `window.localStorage` com *migrations* silenciosas), **Como Executar Localmente**, **Estrutura de Pastas**, **Segurança e Privacidade** e **Documentação Técnica Adicional** (com caminhos relativos para `docs/`).
+- [x] **Preservação do código-fonte e regras de caminhos:** Nenhum arquivo em `src/`, configurações de build ou schema do Local Storage foi alterado; utilizados exclusivamente caminhos relativos à raiz do projeto (sem links `file:///` ou caminhos absolutos da máquina).
+- [x] **Testes executados:** `npm run typecheck` e `npm run build` aprovados sem erros.
 
 ---
 
