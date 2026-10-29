@@ -1,12 +1,13 @@
 import { useCallback, useState } from 'react';
 import { type CharacterName } from '../config/config';
+import { recordLocalLog } from '../logs';
 import {
   type Combo,
   type ComboInputToken,
   type Folder,
   type SaveComboResult,
-  isValidCharacterName,
   isValidComboInputToken,
+  sanitizeCharacterSelection,
   sanitizeUserText,
 } from '../models';
 
@@ -48,7 +49,8 @@ export function validateNewComboMetadata(
     };
   }
 
-  if (!isValidCharacterName(rawCharacter)) {
+  const cleanCharacter = sanitizeCharacterSelection(rawCharacter);
+  if (!cleanCharacter) {
     return {
       valid: false,
       errorMessage: 'Selecione um personagem válido da lista oficial de 33 personagens.',
@@ -58,7 +60,7 @@ export function validateNewComboMetadata(
   return {
     valid: true,
     cleanName,
-    character: rawCharacter,
+    character: cleanCharacter,
   };
 }
 
@@ -149,6 +151,12 @@ export function useComboEditorController(params: UseComboEditorControllerParams)
     const validation = validateNewComboMetadata(modalComboName, modalCharacter);
     if (!validation.valid) {
       setModalError(validation.errorMessage);
+      recordLocalLog({
+        level: 'error',
+        code: 'VALIDATION_ERROR',
+        userMessage: validation.errorMessage,
+        context: 'useComboEditorController.confirmNewComboModal',
+      });
       return false;
     }
 
@@ -233,6 +241,12 @@ export function useComboEditorController(params: UseComboEditorControllerParams)
       if (!cleanName) {
         const message = 'O nome do combo não pode ficar vazio.';
         setEditorError(message);
+        recordLocalLog({
+          level: 'error',
+          code: 'VALIDATION_ERROR',
+          userMessage: message,
+          context: 'useComboEditorController.handleSaveDraft(emptyName)',
+        });
         return { status: 'error', message };
       }
 
@@ -240,6 +254,12 @@ export function useComboEditorController(params: UseComboEditorControllerParams)
         const message =
           'Adicione pelo menos um botão na paleta antes de salvar o combo.';
         setEditorError(message);
+        recordLocalLog({
+          level: 'error',
+          code: 'VALIDATION_ERROR',
+          userMessage: message,
+          context: 'useComboEditorController.handleSaveDraft(emptySequence)',
+        });
         return { status: 'error', message };
       }
 

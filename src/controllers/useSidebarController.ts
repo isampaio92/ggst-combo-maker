@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { recordLocalLog } from '../logs';
 import {
   type Combo,
   type Folder,
@@ -216,6 +217,12 @@ export function useSidebarController(params: UseSidebarControllerParams) {
     const validation = validateFolderNameUniqueness(newFolderName, folders);
     if (!validation.valid) {
       setCreateFolderError(validation.errorMessage);
+      recordLocalLog({
+        level: 'error',
+        code: 'DUPLICATE_NAME_ERROR',
+        userMessage: validation.errorMessage,
+        context: 'useSidebarController.submitCreateFolder',
+      });
       return null;
     }
 
@@ -288,6 +295,12 @@ export function useSidebarController(params: UseSidebarControllerParams) {
         setEditingEntity((prev) =>
           prev ? { ...prev, errorMessage: validation.errorMessage } : null
         );
+        recordLocalLog({
+          level: 'error',
+          code: 'DUPLICATE_NAME_ERROR',
+          userMessage: validation.errorMessage,
+          context: 'useSidebarController.submitRename(folder)',
+        });
         return false;
       }
 
@@ -326,6 +339,12 @@ export function useSidebarController(params: UseSidebarControllerParams) {
       setEditingEntity((prev) =>
         prev ? { ...prev, errorMessage: validation.errorMessage } : null
       );
+      recordLocalLog({
+        level: 'error',
+        code: 'DUPLICATE_NAME_ERROR',
+        userMessage: validation.errorMessage,
+        context: 'useSidebarController.submitRename(combo)',
+      });
       return false;
     }
 

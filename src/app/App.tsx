@@ -3,6 +3,7 @@ import { APP_CONFIG } from '../config/config';
 import { useAppController, useComboEditorController } from '../controllers';
 import { type Combo } from '../models';
 import {
+  AlertBannerList,
   ComboEditorView,
   ComboReadOnlyView,
   NewComboModal,
@@ -10,9 +11,10 @@ import {
 } from '../views';
 
 /**
- * Componente raiz da aplicação GGST Combo Maker (Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual).
+ * Componente raiz da aplicação GGST Combo Maker (Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy).
  * Orquestra o Controller principal (`useAppController`), o Controller do Editor (`useComboEditorController`),
- * o toggle global de preferência visual (Setas/Numpad), a Sidebar de organização e o painel principal de leitura/edição.
+ * o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) de `src/logs/`, o toggle global Setas/Numpad,
+ * a Sidebar de organização e o painel principal de leitura/edição.
  */
 export const App: React.FC = () => {
   const {
@@ -32,6 +34,7 @@ export const App: React.FC = () => {
     moveComboToFolder,
     deleteCombo,
     dismissLog,
+    clearLogs,
   } = useAppController();
 
   const [selectedComboId, setSelectedComboId] = useState<string | null>(null);
@@ -176,48 +179,11 @@ export const App: React.FC = () => {
         </div>
       </header>
 
-      {logs.length > 0 && (
-        <section aria-live="polite" className="app-alerts">
-          {logs.map((entry) => {
-            const isError = entry.level === 'error';
-            const borderColor = isError
-              ? 'var(--state-error)'
-              : 'var(--state-warning)';
-
-            return (
-              <div
-                key={entry.id}
-                role="alert"
-                className={`app-alert-card ${
-                  isError ? 'app-alert-card--error' : 'app-alert-card--warning'
-                }`}
-              >
-                <div>
-                  <strong
-                    style={{
-                      color: borderColor,
-                      fontFamily: 'var(--font-heading)',
-                      fontSize: '1.125rem',
-                      letterSpacing: '0.04em',
-                      marginRight: 'var(--space-sm)',
-                    }}
-                  >
-                    {isError ? 'ERRO:' : 'AVISO:'}
-                  </strong>
-                  <span>{entry.userMessage}</span>
-                </div>
-                <button
-                  type="button"
-                  className="btn-system-secondary"
-                  onClick={() => dismissLog(entry.id)}
-                >
-                  Fechar
-                </button>
-              </div>
-            );
-          })}
-        </section>
-      )}
+      <AlertBannerList
+        logs={logs}
+        onDismissLog={dismissLog}
+        onClearAllLogs={clearLogs}
+      />
 
       <main className="app-workspace">
         <SidebarView

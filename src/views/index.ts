@@ -3,6 +3,7 @@
  * Exporta os componentes visuais da interface GGST Combo Maker.
  */
 
+export * from './AlertBannerList';
 export * from './ConfirmDeleteModal';
 export * from './SidebarView';
 export * from './GameInputTokenBadge';

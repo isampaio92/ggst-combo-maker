@@ -1,9 +1,9 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2), Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3), Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual — Fase 4) e Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual (Fase 5) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 5 operacionais).
-- **Fase atual:** Fase 5 concluída / Aguardando início da Fase 6.
-- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy**.
-- **Última atualização:** 2026-10-29 15:09 (BRT)
+- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6) foram integralmente construídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 6 operacionais).
+- **Fase atual:** Fase 6 concluída (100% das fases do plano de construção concluídas).
+- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e, caso desejado, realizar a validação final de segurança ou publicação estática do pacote `dist/` no GitHub Pages.
+- **Última atualização:** 2026-10-29 15:16 (BRT)
 
 ---
 
@@ -13,9 +13,9 @@
 - [x] **`.gitignore` revisado:** Ajustado para a stack TypeScript + React + Vite (ignorando `node_modules/`, `dist/`, `dist-ssr/`, `.vite/`, `*.tsbuildinfo`, `.env*`, certificados/chaves privadas, `/logs/` apenas na raiz sem afetar `src/logs/`, backups e arquivos de sistema/IDE).
 - [x] **`.gitattributes` criado:** Padronização de finais de linha (`LF`) para códigos-fonte, JSON e Markdown, e marcação binária para imagens (`*.png`, etc.).
 - [x] **Arquivos sensíveis protegidos:** Conferência realizada via `git add --dry-run .` e `git status`; nenhum segredo, `.env` ou cache de build foi versionado.
-- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3, commit da Fase 4 e commit da Fase 5 na branch `main`.
+- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3, commit da Fase 4, commit da Fase 5 e commit da Fase 6 na branch `main`.
 - [x] **Repositório GitHub:** Conectado a `origin/main`.
-- [ ] **Push da Fase 5 para o GitHub:** Pendente de ação do usuário (`git push`).
+- [ ] **Push da Fase 6 para o GitHub:** Pendente de ação do usuário (`git push`).
 
 ---
 
@@ -73,8 +73,13 @@
 - `npm run build`: Aprovado; pacote de produção gerado em `dist/` sem expor diretórios internos.
 - Teste automatizado de integração da Fase 5 (`verify_phase5.ts` via Vite SSR Loader): Aprovado (formatação textual Numpad estrita conforme FSD — `2K`, `236P`, `214K~P`, `CH c.S > f.S > 236K > RC > Dash > 623HS`, `6P + K > [4]6HS > 632146P` —, cópia para área de transferência via Clipboard API, alternância e persistência de preferência visual Setas/Numpad na chave `settings`, renderização protegida em `ComboReadOnlyView` sem paleta ativa e sobrescrita com atualização de `updated_at` ao editar).
 
-### Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy (PENDENTE)
-- [ ] Integrar o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) na interface principal consumindo a fila/memória de erros do módulo `src/logs/`.
-- [ ] Revisar e garantir a sanitização rigorosa de todas as entradas e saídas textuais (`name` de pastas, `name` de combos e `character`) contra ataques de Cross-Site Scripting (XSS) antes de persistir e renderizar no DOM.
-- [ ] Validar os critérios de aceitação técnica e funcional da seção 26 do `docs/FSD.md` e a fidelidade estética ao `docs/DESIGN.md`.
-- [ ] Ajustar configurações finais e testar o pacote estático gerado em `dist/` para entrega no GitHub Pages.
+### Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy (CONCLUÍDA)
+- [x] Integrar o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) na interface principal (`src/views/AlertBannerList.tsx` e `src/app/App.tsx`) consumindo a fila/memória de erros do módulo `src/logs/` e conectando falhas de validação dos Controllers (`useSidebarController.ts` e `useComboEditorController.ts`).
+- [x] Revisar e reforçar a sanitização rigorosa de todas as entradas e saídas textuais (`name` de pastas, `name` de combos, `character` e mensagens de log) contra ataques de Cross-Site Scripting (XSS) antes de persistir e renderizar no DOM (`sanitizeUserText`, `sanitizeCharacterSelection` e `sanitizeLogUserMessage`).
+- [x] Validar os critérios de aceitação técnica e funcional da seção 26 do `docs/FSD.md` e a fidelidade estética ao `docs/DESIGN.md`.
+- [x] Ajustar configurações finais (`build:gh-pages` em `package.json` e `base: './'` em `vite.config.ts`) e testar o pacote estático gerado em `dist/` para entrega no GitHub Pages.
+
+**Resumo de Testes da Fase 6:**
+- `npm run typecheck`: Aprovado sem erros (`tsc --noEmit`).
+- `npm run build`: Aprovado; pacote estático gerado em `dist/` com caminhos relativos (`./assets/`) compatíveis com GitHub Pages e sem expor nenhum diretório interno (`src/config`, `src/models`, `src/controllers`, `src/database/migrations`, `src/logs`).
+- Teste automatizado de integração da Fase 6 (`verify_phase6.ts` via Vite SSR Loader): Aprovado (neutralização de vetores de XSS em `sanitizeUserText` e `sanitizeCharacterSelection`, higienização automática de payloads maliciosos pré-existentes no Local Storage durante as migrations, captura amigável de `QuotaExceededError` e `DUPLICATE_NAME_ERROR` com renderização de `AlertBannerList` nas cores `#FF3333` e `#FF9900`, e verificação do pacote `dist/`).

@@ -164,10 +164,10 @@ Implementar o modo de leitura estático e protegido ao selecionar um combo salvo
 Consolidar os itens transversais do FSD: exibição de alertas visuais amigáveis para erros locais e avisos, revisão de sanitização contra XSS em todos os textos inseridos pelo usuário e configuração final dos scripts de build estático para publicação no GitHub Pages.
 
 ### Checklist de tarefas
-- [ ] Integrar o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) na interface principal consumindo a fila/memória de erros do módulo `src/logs/` (ex.: falha de cota do Local Storage ou erro de validação).
-- [ ] Revisar e garantir a sanitização rigorosa de todas as entradas e saídas textuais (`name` de pastas, `name` de combos e `character`) contra ataques de Cross-Site Scripting (XSS) antes de persistir e renderizar no DOM.
-- [ ] Validar os critérios de aceitação técnica e funcional da seção 26 do `docs/FSD.md` e a fidelidade estética ao `docs/DESIGN.md`.
-- [ ] Ajustar configurações de caminho relativo (`base`) e scripts no `package.json` / `vite.config.ts` para entrega estática no GitHub Pages e testar o pacote final gerado em `dist/`.
+- [x] Integrar o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) na interface principal consumindo a fila/memória de erros do módulo `src/logs/` (ex.: falha de cota do Local Storage ou erro de validação).
+- [x] Revisar e garantir a sanitização rigorosa de todas as entradas e saídas textuais (`name` de pastas, `name` de combos e `character`) contra ataques de Cross-Site Scripting (XSS) antes de persistir e renderizar no DOM.
+- [x] Validar os critérios de aceitação técnica e funcional da seção 26 do `docs/FSD.md` e a fidelidade estética ao `docs/DESIGN.md`.
+- [x] Ajustar configurações de caminho relativo (`base`) e scripts no `package.json` / `vite.config.ts` para entrega estática no GitHub Pages e testar o pacote final gerado em `dist/`.
 
 ### Critérios de pronto
 - Erros de armazenamento ou validação são exibidos na interface com a cor semântica `#FF3333` e registrados via `console.error` sem quebrar a aplicação.

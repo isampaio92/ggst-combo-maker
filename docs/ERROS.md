@@ -41,3 +41,12 @@ Este documento funciona como uma memória técnica viva do projeto **GGST Combo 
 - **Causa:** O módulo de logs locais (`src/logs/index.ts`) define o código de erro inesperado na união `LocalErrorCode` como `'UNEXPECTED_ERROR'`, e não `'UNKNOWN_LOCAL_ERROR'`.
 - **Solução aplicada:** Substituído `'UNKNOWN_LOCAL_ERROR'` por `'UNEXPECTED_ERROR'` nas chamadas de `recordLocalLog` dentro de `src/controllers/comboNotationExporter.ts`.
 - **Como evitar no futuro:** Consultar a definição de `LocalErrorCode` em `src/logs/index.ts` antes de registrar novos códigos de erro no Controller ou Model.
+
+---
+
+## 2026-10-29 - Resolução de pacotes ESM (`ERR_MODULE_NOT_FOUND`) em scripts executados fora da raiz do repositório
+
+- **Sintoma:** Ao executar o script de verificação `verify_phase6.ts` a partir do diretório de scratch com `node --experimental-strip-types`, o Node.js reportou `Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react'`.
+- **Causa:** A resolução nativa de módulos ES do Node.js procura `node_modules/` subindo a árvore de diretórios a partir da localização física do arquivo do script (que estava em uma pasta de scratch fora do repositório), e não a partir do `process.cwd()`.
+- **Solução aplicada:** Utilizado `createRequire(path.join(process.cwd(), 'package.json'))` de `node:module` no script de verificação para resolver `react`, `react-dom/server` e `vite` diretamente a partir do `node_modules/` da raiz do projeto.
+- **Como evitar no futuro:** Em scripts auxiliares executados fora da árvore do projeto, sempre ancorar a resolução de dependências em `path.join(process.cwd(), 'package.json')` via `createRequire`.

@@ -174,14 +174,45 @@ export function isValidVisualPreference(value: unknown): value is VisualPreferen
 
 /**
  * Sanitiza strings fornecidas pelo usuário ou lidas do Local Storage (nomes de pastas e combos)
- * removendo caracteres de controle e tags HTML/scripts para prevenção contra XSS (FSD seção 24).
+ * removendo tags HTML/scripts, caracteres de controle e protocolos perigosos (`javascript:`, `data:`, `vbscript:`)
+ * e manipuladores de eventos (`onload=`, `onerror=`, etc.) para prevenção rigorosa contra XSS (FSD seção 24).
  */
-export function sanitizeUserText(raw: string, maxLength = 80): string {
-  return raw
-    .replace(/[\u0000-\u001F\u007F]/g, '')
-    .replace(/[<>]/g, '')
-    .trim()
-    .slice(0, maxLength);
+export function sanitizeUserText(raw: unknown, maxLength = 80): string {
+  if (typeof raw !== 'string') {
+    return '';
+  }
+
+  return (
+    raw
+      // Remove caracteres de controle ASCII e invisíveis de formatação/zero-width
+      .replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200D\uFEFF]/g, '')
+      // Remove blocos <script>...</script> ou <style>...</style> completos
+      .replace(/<(script|style|iframe|object|embed|svg|math)[^>]*>[\s\S]*?<\/\1>/gi, '')
+      // Remove quaisquer tags HTML completas (ex.: <img src=x onerror=...>, <script>, </script>)
+      .replace(/<\/?[a-zA-Z][^>]*>/g, '')
+      // Remove colchetes angulares soltos remanescentes
+      .replace(/[<>]/g, '')
+      // Remove esquemas de URI executáveis (javascript:, vbscript:, data:text/html)
+      .replace(/\b(?:javascript|vbscript|data)\s*:/gi, '')
+      // Remove atributos de evento inline caso venham sem colchetes (ex.: onerror=alert(1))
+      .replace(/\bon[a-z]+\s*=/gi, '')
+      // Normaliza espaços múltiplos consecutivos
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, maxLength)
+  );
+}
+
+/**
+ * Sanitiza e valida estritamente o nome de um personagem contra a lista oficial de 33 personagens.
+ * Retorna o `CharacterName` oficial se válido ou `null` caso contrário.
+ */
+export function sanitizeCharacterSelection(raw: unknown): CharacterName | null {
+  if (typeof raw !== 'string') {
+    return null;
+  }
+  const trimmed = raw.trim();
+  return isValidCharacterName(trimmed) ? trimmed : null;
 }
 
 /**

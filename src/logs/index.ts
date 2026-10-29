@@ -67,6 +67,23 @@ export function isQuotaExceededError(error: unknown): boolean {
 }
 
 /**
+ * Sanitiza mensagens de erro antes de enviá-las para a fila da UI,
+ * garantindo que nenhum payload HTML/XSS ou stack trace crua chegue ao DOM (FSD seções 19 e 24).
+ */
+function sanitizeLogUserMessage(rawMessage: string): string {
+  const withoutTags = rawMessage
+    .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+    .replace(/<\/?[a-zA-Z][^>]*>/g, '')
+    .replace(/[<>]/g, '')
+    .replace(/\b(?:javascript|vbscript|data)\s*:/gi, '')
+    // Remove eventuais linhas de stack trace caso tenham sido concatenadas acidentalmente
+    .replace(/\s+at\s+[^\n]+/g, '')
+    .trim();
+
+  return withoutTags.slice(0, 260) || 'Ocorreu um erro inesperado no processamento local.';
+}
+
+/**
  * Registra um erro ou aviso local na memória da sessão e envia detalhes técnicos ao console.
  * Nunca expõe pilhas de execução cruas (stack traces) no texto de `userMessage`.
  */
@@ -81,7 +98,7 @@ export function recordLocalLog(params: {
     id: createLogId(),
     level: params.level ?? 'error',
     code: params.code,
-    userMessage: params.userMessage,
+    userMessage: sanitizeLogUserMessage(params.userMessage),
     context: params.context,
     timestamp: new Date().toISOString(),
   };

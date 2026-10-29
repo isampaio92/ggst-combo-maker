@@ -61,16 +61,40 @@
   flex-wrap: wrap;
 }
 
-/* Alertas de Log Local (Erros e Avisos) */
+/* Alertas de Log Local (Erros e Avisos — docs/DESIGN.md seção 9: #FF3333 Error, #FF9900 Warning) */
 .app-alerts {
   padding: var(--space-md) var(--space-lg) 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.app-alerts__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.app-alerts__count {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.app-alerts__clear-btn {
+  padding: 2px var(--space-sm);
+  font-size: 0.9rem;
 }
 
 .app-alert-card {
   background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
   padding: var(--space-sm) var(--space-md);
   display: flex;
   justify-content: space-between;
@@ -82,10 +106,37 @@
 
 .app-alert-card--error {
   border-left: 4px solid var(--state-error);
+  background-color: rgba(255, 51, 51, 0.08);
 }
 
 .app-alert-card--warning {
   border-left: 4px solid var(--state-warning);
+  background-color: rgba(255, 153, 0, 0.08);
+}
+
+.app-alert-card__content {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.app-alert-card__badge {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.app-alert-card__message {
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.app-alert-card__dismiss {
+  flex-shrink: 0;
 }
 
 /* Layout Principal com Sidebar e Área de Conteúdo */
