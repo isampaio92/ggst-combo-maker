@@ -9,6 +9,7 @@ import {
   type VisualPreference,
 } from '../models';
 import { GameInputTokenBadge } from './GameInputTokenBadge';
+import { MotionInputsLegend } from './MotionInputsLegend';
 
 export interface ComboReadOnlyViewProps {
   combo: Combo;
@@ -184,6 +185,9 @@ export const ComboReadOnlyView: React.FC<ComboReadOnlyViewProps> = ({
           {numpadNotationPreview}
         </code>
       </section>
+
+      {/* Legenda explicativa discreta dos Comandos Especiais Completos (Motions) */}
+      <MotionInputsLegend visualPreference={visualPreference} />
     </div>
   );
 };

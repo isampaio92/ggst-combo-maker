@@ -655,3 +655,88 @@
   overflow-x: auto;
   white-space: nowrap;
 }
+
+/* Legenda Explicativa Discreta para Comandos Especiais (Motions) — docs/DESIGN.md seções 2, 3, 4 e 5 */
+.motions-legend {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-ui);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+.motions-legend__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-xs);
+}
+
+.motions-legend__title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.motions-legend__hint {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.motions-legend__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-xs) var(--space-sm);
+}
+
+.motions-legend__item {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-ui);
+  padding: var(--space-xs) var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.motions-legend__notation {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: 'JetBrains Mono', 'Fira Code', var(--font-body), monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.motions-legend__primary-code {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.motions-legend__separator {
+  color: var(--text-secondary);
+}
+
+.motions-legend__secondary-code {
+  color: var(--text-secondary);
+}
+
+.motions-legend__description {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  text-align: right;
+  line-height: 1.3;
+}

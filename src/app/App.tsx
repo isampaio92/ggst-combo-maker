@@ -18,8 +18,6 @@ import {
  */
 export const App: React.FC = () => {
   const {
-    isInitialized,
-    migrationState,
     folders,
     combos,
     settings,
@@ -158,18 +156,6 @@ export const App: React.FC = () => {
             + Novo Combo
           </button>
 
-          <span>
-            Status DB Local:{' '}
-            <strong
-              style={{
-                color: isInitialized ? 'var(--state-success)' : 'var(--state-warning)',
-              }}
-            >
-              {isInitialized
-                ? `MIGRATION V${migrationState?.current_version ?? 1} OK`
-                : 'INICIALIZANDO...'}
-            </strong>
-          </span>
           <span>
             Pastas: <strong style={{ color: 'var(--text-primary)' }}>{folders.length}</strong>
           </span>

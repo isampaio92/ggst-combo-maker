@@ -1,10 +1,20 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6), a **Revisão Final de Segurança Pré-Publicação**, a **Documentação Final de Manutenção** e a **Configuração de Deploy Manual para o GitHub Pages** foram integralmente concluídas e validadas com sucesso.
-- **Fase atual:** Deploy manual para o GitHub Pages configurado (`.github/workflows/deploy-pages.yml` criado e validado — 100% pronto para publicação).
+- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6), a **Revisão Final de Segurança Pré-Publicação**, a **Documentação Final de Manutenção**, a **Configuração de Deploy Manual para o GitHub Pages** e o **Ajuste Visual de Cabeçalho e Legenda de Motions** foram integralmente concluídos e validados com sucesso.
+- **Fase atual:** Modo Manutenção — Ajuste visual concluído (remoção do indicador `Status DB Local` do cabeçalho e inclusão da legenda discreta de Comandos Especiais / Motions).
 - **Pendências:** Ações manuais do usuário: (1) executar `git push origin main` para enviar os commits e o workflow ao GitHub; (2) em **Settings -> Pages** do repositório no GitHub, definir **Source** como **GitHub Actions**; e (3) disparar manualmente o workflow **Deploy GitHub Pages** na aba **Actions**.
 - **Próximo passo recomendado:** Executar `git push origin main`, habilitar `Source: GitHub Actions` nas configurações do GitHub Pages e acionar `Run workflow` na aba Actions.
-- **Última atualização:** 2026-10-29 15:53 (BRT)
+- **Última atualização:** 2026-10-29 16:15 (BRT)
+
+---
+
+## Manutenção Visual — Remoção de Status DB Local e Legenda de Motions (CONCLUÍDA)
+
+- [x] **Indicador `Status DB Local` removido do cabeçalho (`src/app/App.tsx`):** Retirada a exibição visual de `Status DB Local: MIGRATION V1 OK / INICIALIZANDO...` no topo da tela, mantendo a execução automática e silenciosa de `runDatabaseMigrations()` em segundo plano via `useAppController`.
+- [x] **Legenda explicativa discreta de Comandos Especiais (`src/views/MotionInputsLegend.tsx`):** Criado componente na camada View consumindo `MOTION_INPUT_TOKENS` e `INPUT_TOKEN_METADATA` (`src/models/inputMetadata.ts`) para listar os 10 *motions* (`236`, `214`, `623`, `41236`, `63214`, `632146`, `236236`, `214214`, `[4]6`, `[2]8`), respeitando a preferência ativa (`Setas` vs. `Numpad`), exibindo a equivalência entre ambos os formatos e a descrição de cada movimento (incluindo explicação de comandos de carga).
+- [x] **Integração no Editor e no Modo de Leitura (`src/views/ComboEditorView.tsx`, `src/views/ComboReadOnlyView.tsx`, `src/views/index.ts`):** Legenda posicionada dentro do grupo `COMANDOS ESPECIAIS COMPLETOS (MOTIONS)` na paleta de edição e na parte inferior do modo de leitura protegida.
+- [x] **Estilização discreta fiel ao Design System (`src/assets/styles/combo-editor.css`):** Aplicadas cores neutras de apoio (`--bg-secondary: #1E1E1E`, `--bg-primary: #121212`, `--text-secondary: #A0A0A0`, `--border-subtle: #333333`) e cantos retos (`border-radius: 0px`), sem competir com a trilha principal do combo nem com os botões de ação primária (`#E31818`).
+- [x] **Testes executados:** `npm run typecheck`, `npm run build` e verificação automatizada SSR (`verify_maintenance.ts`) aprovados sem erros.
 
 ---
 

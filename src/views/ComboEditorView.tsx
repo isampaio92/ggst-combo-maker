@@ -13,6 +13,7 @@ import {
 } from '../models';
 import { DuplicateComboModal } from './DuplicateComboModal';
 import { GameInputTokenBadge } from './GameInputTokenBadge';
+import { MotionInputsLegend } from './MotionInputsLegend';
 
 export interface ComboEditorViewProps {
   draft: ComboDraftState;
@@ -250,6 +251,7 @@ export const ComboEditorView: React.FC<ComboEditorViewProps> = ({
               />
             ))}
           </div>
+          <MotionInputsLegend visualPreference={visualPreference} />
         </div>
       </section>
 
