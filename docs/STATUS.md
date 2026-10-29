@@ -1,9 +1,19 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6) e a **Revisão Final de Segurança Pré-Publicação** foram integralmente concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte automatizada de auditoria de segurança aprovadas).
-- **Fase atual:** Revisão de Segurança e Boas Práticas concluída (100% pronto para publicação).
-- **Próximo passo recomendado:** Executar `git push` para enviar os commits ao GitHub e avançar para a etapa de publicação (Passo 6).
-- **Última atualização:** 2026-10-29 15:32 (BRT)
+- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6), a **Revisão Final de Segurança Pré-Publicação** e a **Documentação Final de Manutenção** foram integralmente concluídas e validadas com sucesso.
+- **Fase atual:** Documentação Final de Manutenção concluída (`AGENTS.md` em modo manutenção, `docs/MANUTENCAO.md` e `docs/COMO-PEDIR-MUDANCAS.md` criados — 100% pronto para publicação).
+- **Pendências:** Nenhuma pendência funcional, de segurança ou de documentação. Resta apenas o `git push` para o repositório remoto e a etapa opcional de publicação/deploy.
+- **Próximo passo recomendado:** Executar `git push` para enviar os commits ao GitHub e abrir um chat novo com o prompt do Passo 7 caso deseje publicar o sistema.
+- **Última atualização:** 2026-10-29 15:39 (BRT)
+
+---
+
+## Documentação Final de Manutenção (CONCLUÍDA)
+
+- [x] **Documentação final criada:** Conferência prévia realizada confirmando todas as 6 fases funcionais e a revisão de segurança concluídas sem pendências.
+- [x] **`docs/MANUTENCAO.md` criado:** Manual técnico completo de manutenção e evolução contendo visão geral, stack e ambientes, instruções para rodar localmente, mapa detalhado de pastas e arquivos, persistência em Local Storage e migrations, política de usuário único (sem login/RBAC), guias passo a passo para adicionar nova tela, novo campo e nova regra de negócio, roteiro de testes, cuidados obrigatórios de segurança, registro de progresso e lista do que não fazer.
+- [x] **`docs/COMO-PEDIR-MUDANCAS.md` criado:** Guia prático voltado para pessoas leigas com regras de ouro, instruções de leitura obrigatória, 8 modelos de prompts prontos adaptados ao **GGST Combo Maker** (novo campo, nova tela/modal, correção de erro, alteração de regra de negócio, ajuste visual conforme `docs/DESIGN.md`, filtro de busca na Sidebar, revisão de segurança e preparação para commit) e checklist de aceitação.
+- [x] **Arquivo de contexto (`AGENTS.md`) atualizado para modo manutenção:** Protocolo completo de pré e pós-alteração incluído, preservando regras de idioma, caminhos relativos (sem `file:///`), stack, MVC, segurança e Design System.
 
 ---
 
@@ -25,9 +35,9 @@
 - [x] **`.gitignore` revisado:** Ajustado para a stack TypeScript + React + Vite (ignorando `node_modules/`, `dist/`, `dist-ssr/`, `.vite/`, `*.tsbuildinfo`, `.env*`, certificados/chaves privadas, `/logs/` apenas na raiz sem afetar `src/logs/`, backups e arquivos de sistema/IDE).
 - [x] **`.gitattributes` criado:** Padronização de finais de linha (`LF`) para códigos-fonte, JSON e Markdown, e marcação binária para imagens (`*.png`, etc.).
 - [x] **Arquivos sensíveis protegidos:** Conferência realizada via `git add --dry-run .` e `git status`; nenhum segredo, `.env` ou cache de build foi versionado.
-- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3, commit da Fase 4, commit da Fase 5 e commit da Fase 6 na branch `main`.
+- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3, commit da Fase 4, commit da Fase 5, commit da Revisão de Segurança e commit da Documentação Final de Manutenção na branch `main`.
 - [x] **Repositório GitHub:** Conectado a `origin/main`.
-- [ ] **Push da Fase 6 para o GitHub:** Pendente de ação do usuário (`git push`).
+- [ ] **Push para o GitHub:** Pendente de ação do usuário (`git push`).
 
 ---
 
