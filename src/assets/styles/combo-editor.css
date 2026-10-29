@@ -470,3 +470,159 @@
     0 0 8px rgba(227, 24, 24, 0.4),
     0 3px 6px rgba(0, 0, 0, 0.75);
 }
+
+/* Toggle Global de Preferência Visual (Setas / Numpad) no Cabeçalho (Fase 5 — docs/DESIGN.md seções 5, 6.A e 8) */
+.visual-preference-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: 2px var(--space-xs);
+  border-radius: var(--radius-ui);
+}
+
+.visual-preference-toggle__label {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  padding: 0 var(--space-xs);
+  text-transform: uppercase;
+}
+
+.visual-preference-toggle__btn {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-ui);
+  padding: 4px var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.visual-preference-toggle__btn:hover,
+.visual-preference-toggle__btn:focus-visible {
+  color: var(--text-primary);
+  border-color: var(--brand-red);
+  outline: none;
+}
+
+.visual-preference-toggle__btn--active {
+  background-color: var(--brand-red);
+  color: var(--text-primary);
+  border-color: var(--brand-red);
+  font-weight: 700;
+}
+
+.visual-preference-toggle__quick {
+  padding: 4px var(--space-sm);
+  font-size: 0.95rem;
+}
+
+/* Módulo de Leitura Protegida e Compartilhamento (Fase 5 — FSD seções 6, 12 e 22) */
+.combo-readonly {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.combo-readonly__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-md);
+}
+
+.combo-readonly__identity {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.combo-readonly__meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.combo-readonly__mode-badge {
+  background-color: #161616;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--brand-red);
+  padding: 2px var(--space-sm);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.combo-readonly__breadcrumb {
+  color: var(--text-secondary);
+}
+
+.combo-readonly__character {
+  color: var(--brand-red);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.combo-readonly__title {
+  font-size: 2.1rem;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.combo-readonly__timestamp {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.combo-readonly__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.combo-notation-preview {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--border-input);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.combo-notation-preview__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.combo-notation-preview__code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background-color: #161616;
+  border: 1px solid #262626;
+  padding: var(--space-sm) var(--space-md);
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}

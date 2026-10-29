@@ -136,10 +136,10 @@ Implementar o fluxo completo de criação e edição de combos: popup obrigatór
 Implementar o modo de leitura estático e protegido ao selecionar um combo salvo, o toggle global no cabeçalho para alternar em tempo real entre exibição por "Setas" e "Numpad" (persistindo a preferência) e a funcionalidade "Copiar como Texto" no formato Numpad.
 
 ### Checklist de tarefas
-- [ ] Implementar o Modo de Leitura Protegido: ao selecionar um combo na Sidebar, exibir a sequência em linha de forma estática (sem paleta ativa), oferecendo os botões "Editar" e "Copiar como Texto".
-- [ ] Conectar o botão "Editar" para destravar a paleta interativa sobre o combo selecionado e sobrescrever o registro original ao salvar (atualizando `updated_at`).
-- [ ] Implementar o botão (toggle) global no cabeçalho do Módulo Principal de Interface para alternar a exibição de todos os direcionais e *motions* entre "Setas" (`↙`, `↓`, `↓↘→`, etc.) e "Numpad" (`1`, `2`, `236`, etc.), salvando a preferência automaticamente na tabela lógica `settings` do Local Storage.
-- [ ] Implementar a função "Copiar como Texto" enviando a sequência para a área de transferência do navegador (`navigator.clipboard`) com feedback visual de sucesso (`#00E676`), obedecendo estritamente à regra de formatação do FSD:
+- [x] Implementar o Modo de Leitura Protegido: ao selecionar um combo na Sidebar, exibir a sequência em linha de forma estática (sem paleta ativa), oferecendo os botões "Editar" e "Copiar como Texto".
+- [x] Conectar o botão "Editar" para destravar a paleta interativa sobre o combo selecionado e sobrescrever o registro original ao salvar (atualizando `updated_at`).
+- [x] Implementar o botão (toggle) global no cabeçalho do Módulo Principal de Interface para alternar a exibição de todos os direcionais e *motions* entre "Setas" (`↙`, `↓`, `↓↘→`, etc.) e "Numpad" (`1`, `2`, `236`, etc.), salvando a preferência automaticamente na tabela lógica `settings` do Local Storage.
+- [x] Implementar a função "Copiar como Texto" enviando a sequência para a área de transferência do navegador (`navigator.clipboard`) com feedback visual de sucesso (`#00E676`), obedecendo estritamente à regra de formatação do FSD:
   - Direcionais básicos, *motions* e `j.` seguidos diretamente de botões de ataque (`P`, `K`, `c.S`, `f.S`, `HS`, `D`) ou ligados por `~` são concatenados sem espaço (ex.: `2K`, `236P`, `j.c.S`, `214K~P`).
   - Conectores e tokens independentes como `>`, `+`, `RC`, `Dash` e `CH` são separados por espaço simples (ex.: `CH c.S > f.S > 236K > RC > Dash > 623HS`).
 

@@ -4,15 +4,15 @@ import { useAppController, useComboEditorController } from '../controllers';
 import { type Combo } from '../models';
 import {
   ComboEditorView,
-  GameInputTokenBadge,
+  ComboReadOnlyView,
   NewComboModal,
   SidebarView,
 } from '../views';
 
 /**
- * Componente raiz da aplicação GGST Combo Maker (Fase 4 — Módulo de Criação e Edição de Combos).
+ * Componente raiz da aplicação GGST Combo Maker (Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual).
  * Orquestra o Controller principal (`useAppController`), o Controller do Editor (`useComboEditorController`),
- * a Sidebar de organização e o painel principal de criação/edição e visualização.
+ * o toggle global de preferência visual (Setas/Numpad), a Sidebar de organização e o painel principal de leitura/edição.
  */
 export const App: React.FC = () => {
   const {
@@ -22,6 +22,8 @@ export const App: React.FC = () => {
     combos,
     settings,
     logs,
+    setVisualPreference,
+    toggleVisualPreference,
     createFolder,
     renameFolder,
     deleteFolder,
@@ -98,6 +100,52 @@ export const App: React.FC = () => {
         </div>
 
         <div className="app-header__status">
+          <div
+            className="visual-preference-toggle"
+            role="group"
+            aria-label="Alternar formato de exibição entre Setas e Numpad"
+            data-testid="visual-preference-toggle"
+          >
+            <span className="visual-preference-toggle__label">EXIBIÇÃO:</span>
+            <button
+              type="button"
+              className={`visual-preference-toggle__btn ${
+                settings.visual_preference === 'arrows'
+                  ? 'visual-preference-toggle__btn--active'
+                  : ''
+              }`}
+              aria-pressed={settings.visual_preference === 'arrows'}
+              onClick={() => setVisualPreference('arrows')}
+              data-testid="btn-toggle-arrows"
+              title="Exibir direcionais e motions como Setas (↙, ↓, ↓↘→)"
+            >
+              Setas (↓↘→)
+            </button>
+            <button
+              type="button"
+              className={`visual-preference-toggle__btn ${
+                settings.visual_preference === 'numpad'
+                  ? 'visual-preference-toggle__btn--active'
+                  : ''
+              }`}
+              aria-pressed={settings.visual_preference === 'numpad'}
+              onClick={() => setVisualPreference('numpad')}
+              data-testid="btn-toggle-numpad"
+              title="Exibir direcionais e motions em formato Numpad (1, 2, 236)"
+            >
+              Numpad (236)
+            </button>
+            <button
+              type="button"
+              className="btn-system-secondary visual-preference-toggle__quick"
+              onClick={toggleVisualPreference}
+              data-testid="btn-toggle-visual-preference"
+              title="Alternar rapidamente entre Setas e Numpad"
+            >
+              ⇄ Alternar
+            </button>
+          </div>
+
           <button
             type="button"
             className="btn-system-primary"
@@ -124,14 +172,6 @@ export const App: React.FC = () => {
           </span>
           <span>
             Combos: <strong style={{ color: 'var(--text-primary)' }}>{combos.length}</strong>
-          </span>
-          <span>
-            Notação:{' '}
-            <strong
-              style={{ color: 'var(--text-primary)', textTransform: 'uppercase' }}
-            >
-              {settings.visual_preference === 'arrows' ? 'Setas' : 'Numpad'}
-            </strong>
           </span>
         </div>
       </header>
@@ -211,72 +251,12 @@ export const App: React.FC = () => {
               onCloseEditor={closeEditor}
             />
           ) : selectedCombo ? (
-            <div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  gap: 'var(--space-md)',
-                  borderBottom: '1px solid var(--border-subtle)',
-                  paddingBottom: 'var(--space-md)',
-                  marginBottom: 'var(--space-lg)',
-                }}
-              >
-                <div>
-                  <span
-                    style={{
-                      color: 'var(--brand-red)',
-                      fontFamily: 'var(--font-heading)',
-                      fontSize: '1.1rem',
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {selectedComboFolder?.name ?? 'PASTA'} / {selectedCombo.character}
-                  </span>
-                  <h2 style={{ fontSize: '2rem', marginTop: 'var(--space-xs)' }}>
-                    {selectedCombo.name}
-                  </h2>
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '0.82rem' }}>
-                    Última edição:{' '}
-                    {new Date(selectedCombo.updated_at).toLocaleString('pt-BR')}
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', gap: 'var(--space-sm)', flexWrap: 'wrap' }}>
-                  <button
-                    type="button"
-                    className="btn-system-primary"
-                    onClick={() => startEditingExistingCombo(selectedCombo)}
-                    title="Abrir a paleta interativa para editar este combo"
-                  >
-                    Editar Combo
-                  </button>
-                </div>
-              </div>
-
-              <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-sm)' }}>
-                Sequência visual ({selectedCombo.sequence.length}{' '}
-                {selectedCombo.sequence.length === 1 ? 'input' : 'inputs'}):
-              </p>
-
-              <div className="combo-sequence-track" data-testid="combo-readonly-track">
-                {selectedCombo.sequence.map((token, index) => (
-                  <div
-                    key={`${token}-${index}`}
-                    className="combo-sequence-track__item"
-                  >
-                    <GameInputTokenBadge
-                      token={token}
-                      visualPreference={settings.visual_preference}
-                      size="md"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ComboReadOnlyView
+              combo={selectedCombo}
+              folder={selectedComboFolder}
+              visualPreference={settings.visual_preference}
+              onStartEditing={startEditingExistingCombo}
+            />
           ) : (
             <div
               style={{

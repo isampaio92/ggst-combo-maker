@@ -32,3 +32,12 @@ Este documento funciona como uma memória técnica viva do projeto **GGST Combo 
 - **Causa:** A classe base `.ggst-token` aplicava `text-shadow` escuro intenso (`rgba(0,0,0,0.95)`) enquanto `.ggst-token--directional .ggst-token__text` aplicava `background-clip: text` com `-webkit-text-fill-color: transparent` sobre caracteres Unicode de setas. No CSS, o `text-shadow` é desenhado sobre/atrás do texto transparente e ofusca o gradiente de fundo, além de usar setas tipográficas simples em vez da cruz D-Pad de `docs/ggst_inputs.png`.
 - **Solução aplicada:** Foi criado o componente vetorial `DpadDirectionalSvgIcon` em `src/views/GameInputTokenBadge.tsx` que reproduz fielmente a cruz 3D do D-Pad de `docs/ggst_inputs.png` com setas e curvas de comando (*motions*) em SVG usando `linearGradient` real (`#FFEE55` -> `#FFCC00` -> `#FF6600`) e bordas de alto contraste, além de remover `-webkit-text-fill-color: transparent` em `src/assets/styles/combo-editor.css`.
 - **Como evitar no futuro:** Nunca combinar `-webkit-text-fill-color: transparent` (`background-clip: text`) com `text-shadow` escuro herdado, e utilizar ícones vetoriais SVG com `<linearGradient>` para reproduzir elementos gráficos de `docs/ggst_inputs.png`.
+
+---
+
+## 2026-10-29 - Código de erro `UNKNOWN_LOCAL_ERROR` fora da união `LocalErrorCode`
+
+- **Sintoma:** Ao executar `npm run typecheck`, o compilador TypeScript reportou `error TS2322: Type '"UNKNOWN_LOCAL_ERROR"' is not assignable to type 'LocalErrorCode'` em `src/controllers/comboNotationExporter.ts`.
+- **Causa:** O módulo de logs locais (`src/logs/index.ts`) define o código de erro inesperado na união `LocalErrorCode` como `'UNEXPECTED_ERROR'`, e não `'UNKNOWN_LOCAL_ERROR'`.
+- **Solução aplicada:** Substituído `'UNKNOWN_LOCAL_ERROR'` por `'UNEXPECTED_ERROR'` nas chamadas de `recordLocalLog` dentro de `src/controllers/comboNotationExporter.ts`.
+- **Como evitar no futuro:** Consultar a definição de `LocalErrorCode` em `src/logs/index.ts` antes de registrar novos códigos de erro no Controller ou Model.

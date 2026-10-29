@@ -6,3 +6,4 @@
 export * from './useAppController';
 export * from './useSidebarController';
 export * from './useComboEditorController';
+export * from './comboNotationExporter';

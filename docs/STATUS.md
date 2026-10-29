@@ -1,9 +1,9 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2), Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3) e Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual — Fase 4) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 4 operacionais).
-- **Fase atual:** Fase 4 concluída / Aguardando início da Fase 5.
-- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual**.
-- **Última atualização:** 2026-10-29 14:51 (BRT)
+- **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2), Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3), Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual — Fase 4) e Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual (Fase 5) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 5 operacionais).
+- **Fase atual:** Fase 5 concluída / Aguardando início da Fase 6.
+- **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy**.
+- **Última atualização:** 2026-10-29 14:58 (BRT)
 
 ---
 
@@ -13,9 +13,9 @@
 - [x] **`.gitignore` revisado:** Ajustado para a stack TypeScript + React + Vite (ignorando `node_modules/`, `dist/`, `dist-ssr/`, `.vite/`, `*.tsbuildinfo`, `.env*`, certificados/chaves privadas, `/logs/` apenas na raiz sem afetar `src/logs/`, backups e arquivos de sistema/IDE).
 - [x] **`.gitattributes` criado:** Padronização de finais de linha (`LF`) para códigos-fonte, JSON e Markdown, e marcação binária para imagens (`*.png`, etc.).
 - [x] **Arquivos sensíveis protegidos:** Conferência realizada via `git add --dry-run .` e `git status`; nenhum segredo, `.env` ou cache de build foi versionado.
-- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3 e commit da Fase 4 na branch `main`.
+- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3, commit da Fase 4 e commit da Fase 5 na branch `main`.
 - [x] **Repositório GitHub:** Conectado a `origin/main`.
-- [ ] **Push da Fase 4 para o GitHub:** Pendente de ação do usuário (`git push`).
+- [ ] **Push da Fase 5 para o GitHub:** Pendente de ação do usuário (`git push`).
 
 ---
 
@@ -61,11 +61,16 @@
 - `npm run build`: Aprovado; pacote de produção gerado em `dist/` sem expor diretórios internos.
 - Teste automatizado de integração da Fase 4 (`verify_phase4.ts` via Vite SSR Loader): Aprovado (validação obrigatória de nome e personagem da lista oficial de 33 personagens, verificação dos 30 tokens de input e suas classes visuais + SVG do Dash, inserção no fim da fila e remoção um a um via Desfazer incluindo modificadores, criação automática da pasta do personagem ao salvar, bloqueio de duplicidade com `duplicate_warning` e sobrescrita após confirmação).
 
-### Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual (PENDENTE)
-- [ ] Implementar o Modo de Leitura Protegido: ao selecionar um combo na Sidebar, exibir a sequência em linha de forma estática (sem paleta ativa), oferecendo os botões "Editar" e "Copiar como Texto".
-- [ ] Conectar o botão "Editar" para destravar a paleta interativa sobre o combo selecionado e sobrescrever o registro original ao salvar (atualizando `updated_at`).
-- [ ] Implementar o botão (toggle) global no cabeçalho do Módulo Principal de Interface para alternar a exibição de todos os direcionais e *motions* entre "Setas" e "Numpad", salvando a preferência automaticamente na tabela lógica `settings` do Local Storage.
-- [ ] Implementar a função "Copiar como Texto" enviando a sequência para a área de transferência do navegador no formato Numpad conforme as regras de concatenação e espaçamento do FSD.
+### Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual (CONCLUÍDA)
+- [x] Implementar o Modo de Leitura Protegido (`src/views/ComboReadOnlyView.tsx`): ao selecionar um combo na Sidebar, exibir a sequência em linha de forma estática (sem paleta ativa), oferecendo os botões "Editar" e "Copiar como Texto" e a prévia da notação textual Numpad.
+- [x] Conectar o botão "Editar" para destravar a paleta interativa sobre o combo selecionado e sobrescrever o registro original ao salvar (atualizando `updated_at`).
+- [x] Implementar o botão (toggle) global no cabeçalho do Módulo Principal de Interface (`src/app/App.tsx`) para alternar a exibição de todos os direcionais e *motions* entre "Setas" e "Numpad", salvando a preferência automaticamente na tabela lógica `settings` do Local Storage.
+- [x] Implementar a função "Copiar como Texto" (`src/controllers/comboNotationExporter.ts`) enviando a sequência para a área de transferência do navegador no formato Numpad conforme as regras de concatenação e espaçamento do FSD, com feedback visual de sucesso (`#00E676`).
+
+**Resumo de Testes da Fase 5:**
+- `npm run typecheck`: Aprovado sem erros (`tsc --noEmit`).
+- `npm run build`: Aprovado; pacote de produção gerado em `dist/` sem expor diretórios internos.
+- Teste automatizado de integração da Fase 5 (`verify_phase5.ts` via Vite SSR Loader): Aprovado (formatação textual Numpad estrita conforme FSD — `2K`, `236P`, `214K~P`, `CH c.S > f.S > 236K > RC > Dash > 623HS`, `6P + K > [4]6HS > 632146P` —, cópia para área de transferência via Clipboard API, alternância e persistência de preferência visual Setas/Numpad na chave `settings`, renderização protegida em `ComboReadOnlyView` sem paleta ativa e sobrescrita com atualização de `updated_at` ao editar).
 
 ### Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy (PENDENTE)
 - [ ] Integrar o estado visual de erros (`#FF3333`) e alertas (`#FF9900`) na interface principal consumindo a fila/memória de erros do módulo `src/logs/`.
