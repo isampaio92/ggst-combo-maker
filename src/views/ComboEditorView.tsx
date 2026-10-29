@@ -214,10 +214,10 @@ export const ComboEditorView: React.FC<ComboEditorViewProps> = ({
           </div>
         </div>
 
-        {/* Grupo 3: Direcionais Básicos (8 direções + j. Jump) */}
+        {/* Grupo 3: Direcionais Básicos (8 direções) */}
         <div className="input-palette__group">
           <h3 className="input-palette__group-title">
-            DIRECIONAIS BÁSICOS (8 DIREÇÕES + PULO)
+            DIRECIONAIS BÁSICOS (8 DIREÇÕES)
           </h3>
           <div className="input-palette__buttons">
             {DIRECTIONAL_INPUT_TOKENS.map((token) => (

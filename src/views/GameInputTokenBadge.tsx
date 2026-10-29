@@ -70,7 +70,7 @@ export const DashRunnerSvgIcon: React.FC<{ className?: string }> = ({
 /**
  * Ângulo de rotação (em graus, a partir do topo = 0°) para cada uma das 8 direções do D-Pad.
  */
-const DPAD_DIRECTION_ANGLE: Record<Exclude<DirectionalInput, 'j.'>, number> = {
+const DPAD_DIRECTION_ANGLE: Record<DirectionalInput, number> = {
   '8': 0,
   '9': 45,
   '6': 90,
@@ -140,7 +140,7 @@ export const DpadDirectionalSvgIcon: React.FC<{
 
   // 1. Direcionais básicos de 8 direções (1, 2, 3, 4, 6, 7, 8, 9)
   if (token in DPAD_DIRECTION_ANGLE) {
-    const angle = DPAD_DIRECTION_ANGLE[token as Exclude<DirectionalInput, 'j.'>];
+    const angle = DPAD_DIRECTION_ANGLE[token as DirectionalInput];
     return (
       <svg
         className={className}
@@ -172,44 +172,7 @@ export const DpadDirectionalSvgIcon: React.FC<{
     );
   }
 
-  // 2. Modificador de Pulo (j.) com alto contraste sobre o botão circular
-  if (token === 'j.') {
-    return (
-      <svg
-        className={className}
-        viewBox="0 0 48 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <DpadCrossDefsAndBase gradId={gradId} />
-        {/* Seta superior de salto + badge J. em alto contraste */}
-        <path
-          d="M24 4 L31.5 12 H26.8 V18 H21.2 V12 H16.5 Z"
-          fill={`url(#${gradId})`}
-          stroke="#111111"
-          strokeWidth="2.2"
-          strokeLinejoin="round"
-        />
-        <text
-          x="24"
-          y="37"
-          textAnchor="middle"
-          fill={`url(#${gradId})`}
-          stroke="#111111"
-          strokeWidth="3.2"
-          paintOrder="stroke"
-          fontFamily="var(--font-input)"
-          fontWeight="900"
-          fontSize="19"
-        >
-          j.
-        </text>
-      </svg>
-    );
-  }
-
-  // 3. Comandos Especiais Completos (Motions) baseados em docs/ggst_inputs.png
+  // 2. Comandos Especiais Completos (Motions) baseados em docs/ggst_inputs.png
   const renderMotionOverlay = () => {
     switch (token) {
       case '236': // Meia-lua para frente (baixo -> diagonal -> direita)
@@ -405,6 +368,45 @@ export const DpadDirectionalSvgIcon: React.FC<{
           </g>
         );
 
+      case '214214': // Dupla meia-lua para trás (dois arcos 214 concêntricos)
+        return (
+          <g>
+            {/* Arco interno */}
+            <path
+              d="M24 33 A 9 9 0 0 1 15 24"
+              stroke="#111111"
+              strokeWidth="5.8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M24 33 A 9 9 0 0 1 15 24"
+              stroke="#FF9900"
+              strokeWidth="3.4"
+              strokeLinecap="round"
+            />
+            {/* Arco externo principal */}
+            <path
+              d="M28 41 A 17 17 0 0 1 7 24"
+              stroke="#111111"
+              strokeWidth="6.8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M28 41 A 17 17 0 0 1 7 24"
+              stroke={`url(#${gradId})`}
+              strokeWidth="4.2"
+              strokeLinecap="round"
+            />
+            <polygon
+              points="8,13 1.5,24.5 14.5,24.5"
+              fill={`url(#${gradId})`}
+              stroke="#111111"
+              strokeWidth="1.8"
+              strokeLinejoin="round"
+            />
+          </g>
+        );
+
       case '[4]6': // Carga Trás -> Frente
         return (
           <g>
@@ -520,7 +522,6 @@ export function getInputTokenVariantClass(token: ComboInputToken): string {
     case '7':
     case '8':
     case '9':
-    case 'j.':
       return 'ggst-token--directional';
     case '236':
     case '214':
@@ -529,6 +530,7 @@ export function getInputTokenVariantClass(token: ComboInputToken): string {
     case '63214':
     case '632146':
     case '236236':
+    case '214214':
     case '[4]6':
     case '[2]8':
       return 'ggst-token--motion';

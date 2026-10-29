@@ -14,8 +14,8 @@ export type AttackInput = 'P' | 'K' | 'c.S' | 'f.S' | 'HS' | 'D' | 'Dash';
 /** Botão de Red Roman Cancel */
 export type RomanCancelInput = 'RC';
 
-/** Direcionais básicos (8 direções + modificador de pulo j.) */
-export type DirectionalInput = '1' | '2' | '3' | '4' | '6' | '7' | '8' | '9' | 'j.';
+/** Direcionais básicos (8 direções) */
+export type DirectionalInput = '1' | '2' | '3' | '4' | '6' | '7' | '8' | '9';
 
 /** Comandos especiais completos (Motions) */
 export type MotionInput =
@@ -26,6 +26,7 @@ export type MotionInput =
   | '63214'
   | '632146'
   | '236236'
+  | '214214'
   | '[4]6'
   | '[2]8';
 
@@ -60,7 +61,7 @@ export const VALID_COMBO_INPUTS: readonly ComboInputToken[] = [
   'Dash',
   // Roman Cancel
   'RC',
-  // Direcionais e Pulo
+  // Direcionais (8 direções)
   '1',
   '2',
   '3',
@@ -69,7 +70,6 @@ export const VALID_COMBO_INPUTS: readonly ComboInputToken[] = [
   '7',
   '8',
   '9',
-  'j.',
   // Motions
   '236',
   '214',
@@ -78,6 +78,7 @@ export const VALID_COMBO_INPUTS: readonly ComboInputToken[] = [
   '63214',
   '632146',
   '236236',
+  '214214',
   '[4]6',
   '[2]8',
   // Modificadores

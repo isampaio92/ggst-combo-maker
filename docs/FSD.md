@@ -70,8 +70,8 @@ As funcionalidades da primeira versão estão divididas nas seguintes áreas fun
 - **Paleta de Botões Visuais:** Interface interativa com:
   - **Botões de ataque:** `P`, `K`, `f.S`, `c.S`, `HS`, `D` e `Dash` (representado visualmente pelo ícone vetorial de boneco correndo em branco sobre botão circular escuro, seguindo a referência `docs/ggst_inputs.png`).
   - **Botão de Red Roman Cancel:** Botão circular com texto `"RC"` e borda/destaque em vermelho (`#E31818` / `#FF3333`).
-  - **Direcionais básicos (8 direções + pulo):** `1` (`↙`), `2` (`↓`), `3` (`↘`), `4` (`←`), `6` (`→`), `7` (`↖`), `8` (`↑`), `9` (`↗`) e modificador de pulo `j.` (Jump).
-  - **Comandos especiais completos (Motions):** `236` (`↓↘→`), `214` (`↓↙←`), `623` (`→↓↘`), `41236` (`←↙↓↘→`), `63214` (`→↘↓↙←`), `632146` (`→↘↓↙←→`), `236236` (`↓↘→↓↘→`), `[4]6` (`[←]→`) e `[2]8` (`[↓]↑`).
+  - **Direcionais básicos (8 direções):** `1` (`↙`), `2` (`↓`), `3` (`↘`), `4` (`←`), `6` (`→`), `7` (`↖`), `8` (`↑`) e `9` (`↗`).
+  - **Comandos especiais completos (Motions):** `236` (`↓↘→`), `214` (`↓↙←`), `623` (`→↓↘`), `41236` (`←↙↓↘→`), `63214` (`→↘↓↙←`), `632146` (`→↘↓↙←→`), `236236` (`↓↘→↓↘→`), `214214` (`↓↙←↓↙←`), `[4]6` (`[←]→`) e `[2]8` (`[↓]↑`).
 - **Inserção de Modificadores:** Botões adicionais de ligação (`+`, `>`, `~`) e Counter Hit (`CH`), tratados como ícones soltos na sequência.
 - **Edição Sequencial (Desfazer):** A inserção ocorre no final da sequência. Uma ação de "desfazer" permite remover o último botão inserido, apagando um a um, de trás para frente, incluindo modificadores.
 

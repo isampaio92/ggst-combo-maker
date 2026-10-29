@@ -38,7 +38,6 @@ export const DIRECTIONAL_INPUT_TOKENS: readonly DirectionalInput[] = [
   '1',
   '2',
   '3',
-  'j.',
 ] as const;
 
 export const MOTION_INPUT_TOKENS: readonly MotionInput[] = [
@@ -49,6 +48,7 @@ export const MOTION_INPUT_TOKENS: readonly MotionInput[] = [
   '63214',
   '632146',
   '236236',
+  '214214',
   '[4]6',
   '[2]8',
 ] as const;
@@ -178,13 +178,6 @@ export const INPUT_TOKEN_METADATA: Record<ComboInputToken, InputTokenMetadata> =
     numpadLabel: '9',
     description: 'Salto para Frente (9 / ↗)',
   },
-  'j.': {
-    token: 'j.',
-    category: 'directional',
-    arrowsLabel: 'j.',
-    numpadLabel: 'j.',
-    description: 'Modificador de Pulo / Golpe Aéreo (Jump)',
-  },
 
   // Motions (Comandos especiais completos)
   '236': {
@@ -235,6 +228,13 @@ export const INPUT_TOKEN_METADATA: Record<ComboInputToken, InputTokenMetadata> =
     arrowsLabel: '↓↘→↓↘→',
     numpadLabel: '236236',
     description: 'Dupla meia-lua para frente (236236 / ↓↘→↓↘→)',
+  },
+  '214214': {
+    token: '214214',
+    category: 'motion',
+    arrowsLabel: '↓↙←↓↙←',
+    numpadLabel: '214214',
+    description: 'Dupla meia-lua para trás (214214 / ↓↙←↓↙←)',
   },
   '[4]6': {
     token: '[4]6',

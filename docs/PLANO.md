@@ -106,8 +106,8 @@ Implementar o fluxo completo de criação e edição de combos: popup obrigatór
 - [x] Implementar a paleta interativa de botões visuais seguindo fielmente as cores e formatos 3D circulares de `docs/DESIGN.md` e `docs/FSD.md`:
   - Botões de ataque: `P` (`#FF77CC`), `K` (`#33CCFF`), `c.S` e `f.S` (`#00E676`), `HS` (`#FF3333`), `D` (`#FF9900`) e `Dash` (ícone SVG de boneco correndo e aro interno em branco `#F5F5F5` sobre botão circular escuro).
   - Botão de Red Roman Cancel: `RC` com destaque/borda em vermelho (`#E31818` / `#FF3333`).
-  - Direcionais básicos (8 direções + pulo): `1` (`↙`), `2` (`↓`), `3` (`↘`), `4` (`←`), `6` (`→`), `7` (`↖`), `8` (`↑`), `9` (`↗`) e `j.` (Jump).
-  - Comandos especiais completos (*Motions*): `236` (`↓↘→`), `214` (`↓↙←`), `623` (`→↓↘`), `41236` (`←↙↓↘→`), `63214` (`→↘↓↙←`), `632146` (`→↘↓↙←→`), `236236` (`↓↘→↓↘→`), `[4]6` (`[←]→`) e `[2]8` (`[↓]↑`).
+  - Direcionais básicos (8 direções): `1` (`↙`), `2` (`↓`), `3` (`↘`), `4` (`←`), `6` (`→`), `7` (`↖`), `8` (`↑`) e `9` (`↗`).
+  - Comandos especiais completos (*Motions*): `236` (`↓↘→`), `214` (`↓↙←`), `623` (`→↓↘`), `41236` (`←↙↓↘→`), `63214` (`→↘↓↙←`), `632146` (`→↘↓↙←→`), `236236` (`↓↘→↓↘→`), `214214` (`↓↙←↓↙←`), `[4]6` (`[←]→`) e `[2]8` (`[↓]↑`).
   - Modificadores de ligação e estado: `+`, `>`, `~` (`#F5F5F5`) e Counter Hit `CH` (`#E31818` / `#FF9900`).
 - [x] Construir a área de renderização sequencial do combo com rolagem horizontal fluida (`overflow-x: auto`) e sem quebra de linha (`white-space: nowrap` / `flex-wrap: nowrap`) para suportar combos extensos.
 - [x] Implementar a edição sequencial (inserção sempre ao final da fila) e o botão "Desfazer" (removendo o último item inserido, um a um, de trás para frente, incluindo modificadores).

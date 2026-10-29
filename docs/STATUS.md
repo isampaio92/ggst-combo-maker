@@ -3,7 +3,7 @@
 - **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2), Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3) e Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual — Fase 4) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 4 operacionais).
 - **Fase atual:** Fase 4 concluída / Aguardando início da Fase 5.
 - **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 5 — Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual**.
-- **Última atualização:** 2026-10-29 14:44 (BRT)
+- **Última atualização:** 2026-10-29 14:51 (BRT)
 
 ---
 
