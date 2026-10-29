@@ -1,0 +1,85 @@
+/**
+ * Design System: GGST Interface
+ * Variáveis e estilos globais baseados integralmente em docs/DESIGN.md
+ */
+
+:root {
+  /* Cores de Fundo e Texto (Interface) */
+  --bg-primary: #121212;
+  --bg-secondary: #1E1E1E;
+  --bg-input-field: #1A1A1A;
+  --text-primary: #F5F5F5;
+  --text-secondary: #A0A0A0;
+  --brand-red: #E31818;
+  --border-subtle: #333333;
+  --border-input: #555555;
+
+  /* Cores Semânticas de Estado */
+  --state-success: #00E676;
+  --state-error: #FF3333;
+  --state-warning: #FF9900;
+  --state-empty: #333333;
+
+  /* Cores Exclusivas de Inputs do Jogo (Baseado em docs/DESIGN.md) */
+  --btn-base-start: #444444;
+  --btn-base-end: #222222;
+  --input-punch: #FF77CC;
+  --input-kick: #33CCFF;
+  --input-slash: #00E676;
+  --input-heavy-slash: #FF3333;
+  --input-dust: #FF9900;
+  --input-rc-border: #E31818;
+  --input-rc-text: #FF3333;
+  --input-dash: #F5F5F5;
+  --input-directional-start: #FF6600;
+  --input-directional-end: #FFCC00;
+  --input-modifier: #F5F5F5;
+  --input-ch-border: #E31818;
+  --input-ch-text: #FF9900;
+
+  /* Tipografia */
+  --font-heading: 'Teko', 'Oswald', Impact, sans-serif;
+  --font-body: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
+  --font-input: 'Arial Rounded MT Bold', 'Inter', sans-serif;
+
+  /* Espaçamentos (Grid de 8px) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Bordas */
+  --radius-ui: 0px;
+  --radius-input-btn: 50%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
