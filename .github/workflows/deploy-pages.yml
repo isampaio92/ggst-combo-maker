@@ -1,0 +1,64 @@
+name: Deploy GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    name: Compilar e publicar no GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Validar tipagem TypeScript
+        run: npm run typecheck
+
+      - name: Gerar build estático para GitHub Pages
+        run: npm run build:gh-pages
+
+      - name: Verificar segurança do pacote dist
+        run: |
+          if [ ! -f "dist/index.html" ]; then
+            echo "Erro: dist/index.html não foi gerado."
+            exit 1
+          fi
+          if find dist -name "*.map" -o -name ".env*" -o -name ".git*" -o -name "AGENTS.md" -o -name "CLAUDE.md" -o -name "README.md" -o -name "docs" -o -name "src" | grep -q .; then
+            echo "Erro: Arquivos sensíveis, documentação ou sourcemaps encontrados em dist/."
+            exit 1
+          fi
+          echo "Pacote dist/ validado com sucesso."
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empacotar artefato de produção (apenas dist/)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

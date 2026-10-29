@@ -1,10 +1,20 @@
 # Status do Projeto — GGST Combo Maker (`docs/STATUS.md`)
 
-- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6), a **Revisão Final de Segurança Pré-Publicação** e a **Documentação Final de Manutenção** foram integralmente concluídas e validadas com sucesso.
-- **Fase atual:** Documentação Final de Manutenção concluída (`AGENTS.md` em modo manutenção, `docs/MANUTENCAO.md` e `docs/COMO-PEDIR-MUDANCAS.md` criados — 100% pronto para publicação).
-- **Pendências:** Nenhuma pendência funcional, de segurança ou de documentação. Resta apenas o `git push` para o repositório remoto e a etapa opcional de publicação/deploy.
-- **Próximo passo recomendado:** Executar `git push` para enviar os commits ao GitHub e abrir um chat novo com o prompt do Passo 7 caso deseje publicar o sistema.
-- **Última atualização:** 2026-10-29 15:39 (BRT)
+- **Estado atual do projeto:** Todas as 6 fases previstas em `docs/PLANO.md` (Fases 1 a 6), a **Revisão Final de Segurança Pré-Publicação**, a **Documentação Final de Manutenção** e a **Configuração de Deploy Manual para o GitHub Pages** foram integralmente concluídas e validadas com sucesso.
+- **Fase atual:** Deploy manual para o GitHub Pages configurado (`.github/workflows/deploy-pages.yml` criado e validado — 100% pronto para publicação).
+- **Pendências:** Ações manuais do usuário: (1) executar `git push origin main` para enviar os commits e o workflow ao GitHub; (2) em **Settings -> Pages** do repositório no GitHub, definir **Source** como **GitHub Actions**; e (3) disparar manualmente o workflow **Deploy GitHub Pages** na aba **Actions**.
+- **Próximo passo recomendado:** Executar `git push origin main`, habilitar `Source: GitHub Actions` nas configurações do GitHub Pages e acionar `Run workflow` na aba Actions.
+- **Última atualização:** 2026-10-29 15:53 (BRT)
+
+---
+
+## Configuração de Deploy Manual — GitHub Pages (CONCLUÍDA)
+
+- [x] **Configuração de deploy manual para o GitHub Pages concluída:** Preparação completa do pipeline de publicação estática isolando exclusivamente o diretório compilado `dist/`.
+- [x] **Workflow `.github/workflows/deploy-pages.yml` criado:** Disparo manual (`workflow_dispatch`) utilizando Node.js 22, `npm ci`, `npm run typecheck`, `npm run build:gh-pages`, etapa de verificação de segurança pós-build da pasta `dist/` e actions oficiais (`actions/configure-pages@v5`, `actions/upload-pages-artifact@v3` e `actions/deploy-pages@v4`).
+- [x] **Isolamento de produção validado:** Confirmado que `vite.config.ts` (`base: './'`, `publicDir: false`, `sourcemap: false`), `index.html` (meta tags `Content-Security-Policy` e `referrer="no-referrer"`) e `.gitignore` impedem o envio de `docs/`, `AGENTS.md`, `src/`, `.git/`, `.github/`, `node_modules/`, `.env` ou sourcemaps para o GitHub Pages.
+- [x] **Testes `npm run typecheck`, `npm run build` e `npm run build:gh-pages` executados:** Aprovados sem erros; pacote `dist/` verificado contendo apenas `dist/index.html` e `dist/assets/*`.
+- [x] **Orientações de ativação do GitHub Pages entregues:** Passo a passo documentado para configurar `Source: GitHub Actions` em **Settings -> Pages**, executar `git push origin main`, disparar o workflow manualmente e validar o checklist pós-deploy.
 
 ---
 
@@ -35,9 +45,9 @@
 - [x] **`.gitignore` revisado:** Ajustado para a stack TypeScript + React + Vite (ignorando `node_modules/`, `dist/`, `dist-ssr/`, `.vite/`, `*.tsbuildinfo`, `.env*`, certificados/chaves privadas, `/logs/` apenas na raiz sem afetar `src/logs/`, backups e arquivos de sistema/IDE).
 - [x] **`.gitattributes` criado:** Padronização de finais de linha (`LF`) para códigos-fonte, JSON e Markdown, e marcação binária para imagens (`*.png`, etc.).
 - [x] **Arquivos sensíveis protegidos:** Conferência realizada via `git add --dry-run .` e `git status`; nenhum segredo, `.env` ou cache de build foi versionado.
-- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3, commit da Fase 4, commit da Fase 5, commit da Revisão de Segurança e commit da Documentação Final de Manutenção na branch `main`.
+- [x] **Commits realizados:** Commit inicial (`"Estrutura inicial do projeto"`), commit da Fase 2, commit da Fase 3, commit da Fase 4, commit da Fase 5, commit da Revisão de Segurança, commit da Documentação Final de Manutenção e commit da Configuração de Deploy Manual para o GitHub Pages (`"Configura deploy manual para o GitHub Pages"`) na branch `main`.
 - [x] **Repositório GitHub:** Conectado a `origin/main`.
-- [ ] **Push para o GitHub:** Pendente de ação do usuário (`git push`).
+- [ ] **Push e ativação no GitHub:** Pendente de ação do usuário (`git push origin main`, configuração de `Source: GitHub Actions` em **Settings -> Pages** e disparo manual na aba **Actions**).
 
 ---
 
