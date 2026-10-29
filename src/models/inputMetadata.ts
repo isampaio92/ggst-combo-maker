@@ -23,7 +23,7 @@ export const ATTACK_INPUT_TOKENS: readonly AttackInput[] = [
   'P',
   'K',
   'c.S',
-  'f.S',
+  'S',
   'HS',
   'D',
   'Dash',
@@ -83,12 +83,12 @@ export const INPUT_TOKEN_METADATA: Record<ComboInputToken, InputTokenMetadata> =
     numpadLabel: 'c.S',
     description: 'Close Slash (Slash de perto)',
   },
-  'f.S': {
-    token: 'f.S',
+  S: {
+    token: 'S',
     category: 'attack',
-    arrowsLabel: 'f.S',
-    numpadLabel: 'f.S',
-    description: 'Far Slash (Slash de longe)',
+    arrowsLabel: 'S',
+    numpadLabel: 'S',
+    description: 'Slash (S)',
   },
   HS: {
     token: 'HS',

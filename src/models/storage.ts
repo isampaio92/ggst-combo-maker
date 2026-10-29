@@ -177,7 +177,11 @@ export function validateAndNormalizeCombos(
 
     const sanitizedSequence: ComboInputToken[] = [];
     for (const token of rawSequence) {
-      if (isValidComboInputToken(token)) {
+      if (token === 'f.S') {
+        // Normaliza token legado 'f.S' para 'S'
+        sanitizedSequence.push('S');
+        hadInvalidItems = true;
+      } else if (isValidComboInputToken(token)) {
         sanitizedSequence.push(token);
       } else {
         hadInvalidItems = true;

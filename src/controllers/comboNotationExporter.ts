@@ -21,7 +21,7 @@ const NORMAL_ATTACK_BUTTONS: ReadonlySet<ComboInputToken> = new Set<ComboInputTo
   'P',
   'K',
   'c.S',
-  'f.S',
+  'S',
   'HS',
   'D',
 ]);

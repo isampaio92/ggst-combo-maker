@@ -3,7 +3,7 @@
 - **Estado atual do projeto:** Infraestrutura base (Fase 1), Persistência em Local Storage, Migrations, Logs Locais e Base MVC (Fase 2), Módulo de Organização (Sidebar), Gestão de Pastas e Drag and Drop (Fase 3), Módulo de Criação e Edição de Combos (Modal Inicial e Paleta Visual — Fase 4) e Módulo de Leitura Protegida, Alternância Setas/Numpad e Exportação Textual (Fase 5) concluídas e validadas com sucesso (`npm run typecheck`, `npm run build` e suíte de testes de integração da Fase 5 operacionais).
 - **Fase atual:** Fase 5 concluída / Aguardando início da Fase 6.
 - **Próximo passo recomendado:** Executar `git push` para atualizar o backup remoto no GitHub e iniciar a **Fase 6 — Tratamento Visual de Erros, Sanitização XSS e Preparação para Deploy**.
-- **Última atualização:** 2026-10-29 14:58 (BRT)
+- **Última atualização:** 2026-10-29 15:09 (BRT)
 
 ---
 
@@ -66,6 +66,7 @@
 - [x] Conectar o botão "Editar" para destravar a paleta interativa sobre o combo selecionado e sobrescrever o registro original ao salvar (atualizando `updated_at`).
 - [x] Implementar o botão (toggle) global no cabeçalho do Módulo Principal de Interface (`src/app/App.tsx`) para alternar a exibição de todos os direcionais e *motions* entre "Setas" e "Numpad", salvando a preferência automaticamente na tabela lógica `settings` do Local Storage.
 - [x] Implementar a função "Copiar como Texto" (`src/controllers/comboNotationExporter.ts`) enviando a sequência para a área de transferência do navegador no formato Numpad conforme as regras de concatenação e espaçamento do FSD, com feedback visual de sucesso (`#00E676`).
+- [x] Ajustar visual dos modificadores de ligação (`+`, `>`, `~`) com fundo mais escuro e tamanho/padding reduzidos (preservando o `CH` intacto) e substituir o token `f.S` por `S` (com normalização automática de combos legados no Local Storage).
 
 **Resumo de Testes da Fase 5:**
 - `npm run typecheck`: Aprovado sem erros (`tsc --noEmit`).

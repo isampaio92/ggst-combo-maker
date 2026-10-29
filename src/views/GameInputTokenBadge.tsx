@@ -504,7 +504,7 @@ export function getInputTokenVariantClass(token: ComboInputToken): string {
     case 'K':
       return 'ggst-token--kick';
     case 'c.S':
-    case 'f.S':
+    case 'S':
       return 'ggst-token--slash';
     case 'HS':
       return 'ggst-token--heavy-slash';

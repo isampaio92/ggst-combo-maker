@@ -9,7 +9,7 @@ import { APP_CONFIG, type CharacterName } from '../config/config';
 export type VisualPreference = 'arrows' | 'numpad';
 
 /** Botões de ataque básicos e Dash */
-export type AttackInput = 'P' | 'K' | 'c.S' | 'f.S' | 'HS' | 'D' | 'Dash';
+export type AttackInput = 'P' | 'K' | 'c.S' | 'S' | 'HS' | 'D' | 'Dash';
 
 /** Botão de Red Roman Cancel */
 export type RomanCancelInput = 'RC';
@@ -55,7 +55,7 @@ export const VALID_COMBO_INPUTS: readonly ComboInputToken[] = [
   'P',
   'K',
   'c.S',
-  'f.S',
+  'S',
   'HS',
   'D',
   'Dash',

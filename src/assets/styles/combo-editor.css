@@ -454,11 +454,40 @@
     0 0 6px rgba(255, 153, 0, 0.45);
 }
 
-/* Modificadores de Ligação (+, >, ~): Conectores em #F5F5F5 */
+/* Modificadores de Ligação (+, >, ~): Fundo mais escuro e tamanho/padding reduzidos para ficarem menos chamativos (CH permanece intacto) */
 .ggst-token--connector {
-  color: var(--input-modifier);
-  border-color: rgba(245, 245, 245, 0.35);
-  font-size: 1.25rem;
+  background: radial-gradient(
+    circle at 35% 30%,
+    #242424 0%,
+    #181818 60%,
+    #111111 100%
+  );
+  color: #D8D8D8;
+  border: 1.5px solid #2A2A2A;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.06),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.75),
+    0 2px 4px rgba(0, 0, 0, 0.65);
+  padding: 0;
+  font-size: 1rem;
+}
+
+.ggst-token--connector.ggst-token--sm {
+  width: 30px;
+  height: 30px;
+  font-size: 0.85rem;
+}
+
+.ggst-token--connector.ggst-token--md {
+  width: 36px;
+  height: 36px;
+  font-size: 0.95rem;
+}
+
+.ggst-token--connector.ggst-token--lg {
+  width: 42px;
+  height: 42px;
+  font-size: 1.05rem;
 }
 
 /* Counter Hit (CH): Destaque em vermelho/laranja de alerta (#E31818 / #FF9900) */
